@@ -1,0 +1,193 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --flamingo-pink: 229 9 130;
+    --obsidian: 5 5 5;
+    --carbon: 17 17 17;
+    --titanium: 184 184 184;
+    --soft: 245 245 245;
+    --violet: 138 46 255;
+    --cyan: 0 207 255;
+
+    color-scheme: dark;
+  }
+
+  * {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+  }
+
+  html,
+  body {
+    background: rgb(var(--obsidian));
+    color: rgb(var(--soft));
+    font-family: var(--font-body), ui-sans-serif, system-ui, sans-serif;
+    overflow-x: hidden;
+  }
+
+  body {
+    background-image:
+      radial-gradient(
+        ellipse at top,
+        rgba(229, 9, 130, 0.06),
+        transparent 55%
+      ),
+      radial-gradient(
+        ellipse at bottom,
+        rgba(138, 46, 255, 0.05),
+        transparent 60%
+      );
+  }
+
+  ::selection {
+    background: rgba(229, 9, 130, 0.45);
+    color: #fff;
+  }
+
+  ::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+  }
+  ::-webkit-scrollbar-track {
+    background: rgb(var(--obsidian));
+  }
+  ::-webkit-scrollbar-thumb {
+    background: rgba(229, 9, 130, 0.35);
+    border-radius: 4px;
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    background: rgba(229, 9, 130, 0.6);
+  }
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    font-family: var(--font-display), ui-sans-serif, system-ui, sans-serif;
+    font-weight: 700;
+    letter-spacing: -0.01em;
+  }
+
+  /* Lenis */
+  html.lenis,
+  html.lenis body {
+    height: auto;
+  }
+  .lenis.lenis-smooth {
+    scroll-behavior: auto !important;
+  }
+  .lenis.lenis-smooth [data-lenis-prevent] {
+    overscroll-behavior: contain;
+  }
+  .lenis.lenis-stopped {
+    overflow: hidden;
+  }
+  .lenis.lenis-scrolling iframe {
+    pointer-events: none;
+  }
+}
+
+@layer components {
+  .glass {
+    background: rgba(17, 17, 17, 0.55);
+    backdrop-filter: blur(18px) saturate(160%);
+    -webkit-backdrop-filter: blur(18px) saturate(160%);
+    border: 1px solid rgba(184, 184, 184, 0.08);
+  }
+
+  .glass-strong {
+    background: rgba(8, 8, 8, 0.7);
+    backdrop-filter: blur(24px) saturate(180%);
+    -webkit-backdrop-filter: blur(24px) saturate(180%);
+    border: 1px solid rgba(184, 184, 184, 0.12);
+  }
+
+  .glow-pink {
+    box-shadow:
+      0 0 0 1px rgba(229, 9, 130, 0.55),
+      0 0 30px rgba(229, 9, 130, 0.35),
+      0 0 80px rgba(229, 9, 130, 0.18);
+  }
+
+  .text-gradient-pink {
+    background: linear-gradient(
+      120deg,
+      #ffffff 0%,
+      #ffd9ec 35%,
+      #e50982 65%,
+      #8a2eff 100%
+    );
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+
+  .text-gradient-metal {
+    background: linear-gradient(
+      180deg,
+      #ffffff 0%,
+      #cfcfcf 40%,
+      #6a6a6a 90%
+    );
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+
+  .hairline {
+    height: 1px;
+    background: linear-gradient(
+      90deg,
+      transparent,
+      rgba(184, 184, 184, 0.45),
+      transparent
+    );
+  }
+
+  .grid-noise {
+    background-image:
+      linear-gradient(rgba(184, 184, 184, 0.04) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(184, 184, 184, 0.04) 1px, transparent 1px);
+    background-size: 80px 80px;
+  }
+}
+
+@layer utilities {
+  .display {
+    font-family: var(--font-display), ui-sans-serif, system-ui, sans-serif;
+    text-transform: uppercase;
+    letter-spacing: 0.02em;
+  }
+
+  .container-flame {
+    width: 100%;
+    max-width: 88rem;
+    margin-inline: auto;
+    padding-inline: clamp(1rem, 4vw, 3rem);
+  }
+
+  .perspective {
+    perspective: 1400px;
+  }
+
+  .no-tap-highlight {
+    -webkit-tap-highlight-color: transparent;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+}

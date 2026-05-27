@@ -1,0 +1,31 @@
+import type { MetadataRoute } from "next";
+import { PRODUCTS } from "@/content/products";
+import { ACADEMY_LESSONS } from "@/content/academy";
+import { SITE } from "@/lib/seo";
+
+const STATIC_PATHS = ["", "products", "technology", "about", "academy", "media", "contact"];
+
+export default function sitemap(): MetadataRoute.Sitemap {
+  const now = new Date();
+
+  return [
+    ...STATIC_PATHS.map((p) => ({
+      url: `${SITE.url}/${p}`.replace(/\/$/, "") || SITE.url,
+      lastModified: now,
+      changeFrequency: "weekly" as const,
+      priority: p === "" ? 1 : 0.8,
+    })),
+    ...PRODUCTS.map((product) => ({
+      url: `${SITE.url}/products/${product.slug}`,
+      lastModified: now,
+      changeFrequency: "monthly" as const,
+      priority: 0.7,
+    })),
+    ...ACADEMY_LESSONS.map((l) => ({
+      url: `${SITE.url}/academy/${l.slug}`,
+      lastModified: now,
+      changeFrequency: "monthly" as const,
+      priority: 0.6,
+    })),
+  ];
+}

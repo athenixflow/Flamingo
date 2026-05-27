@@ -2,6 +2,7 @@ import { notFound } from "next/navigation";
 import type { Metadata } from "next";
 import { PRODUCTS, getProduct, getRelatedProducts } from "@/content/products";
 import { getCategory } from "@/content/categories";
+import { getProductImage } from "@/lib/product-images";
 import { buildMetadata, SITE } from "@/lib/seo";
 import { ProductHero } from "@/components/sections/product-detail/ProductHero";
 import { ProductOverview } from "@/components/sections/product-detail/ProductOverview";
@@ -36,6 +37,7 @@ export default async function ProductDetailPage({ params }: PageProps) {
 
   const category = getCategory(product.category);
   const related = getRelatedProducts(product);
+  const realImage = getProductImage(product.id);
 
   const jsonLd = {
     "@context": "https://schema.org",
@@ -45,7 +47,7 @@ export default async function ProductDetailPage({ params }: PageProps) {
     category: product.realCategory,
     description: product.longCopy,
     brand: { "@type": "Brand", name: "Flamingo Car Care" },
-    image: `${SITE.url}/images/og/default.jpg`,
+    image: `${SITE.url}${realImage ?? "/images/og/default.jpg"}`,
   };
 
   return (
@@ -54,7 +56,7 @@ export default async function ProductDetailPage({ params }: PageProps) {
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       />
-      <ProductHero product={product} category={category} />
+      <ProductHero product={product} category={category} realImageSrc={realImage} />
       <ProductOverview product={product} />
       <ProductTechnology product={product} />
       <UsageGuide product={product} />

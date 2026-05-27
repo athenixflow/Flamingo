@@ -7,6 +7,7 @@ import { Container } from "@/components/ui/Container";
 import { GlassCard } from "@/components/ui/GlassCard";
 import { PRODUCTS } from "@/content/products";
 import { CATEGORIES, type CategoryId } from "@/content/categories";
+import { ProductArt } from "@/components/ui/ProductArt";
 import { cn } from "@/lib/utils/cn";
 
 type Filter = CategoryId | "all";
@@ -104,23 +105,12 @@ function CatalogCard({
             </span>
           </div>
 
-          <div
-            className="relative h-32 w-full overflow-hidden rounded-2xl"
-            style={{
-              background: `radial-gradient(ellipse at center, ${product.heroColor}55, transparent 70%), #050505`,
-            }}
-          >
-            <motion.div
-              className="absolute inset-0 flex items-center justify-center"
-              whileHover={{ scale: 1.06 }}
-              transition={{ type: "spring", stiffness: 200, damping: 20 }}
-            >
-              <span className="display text-2xl font-bold tracking-ultra text-flamingo-soft/90">
-                {product.name.split(" ")[0]}
-              </span>
-            </motion.div>
-            <div className="absolute inset-x-0 bottom-0 h-px bg-gradient-to-r from-transparent via-flamingo-pink/40 to-transparent" />
-          </div>
+          <ProductArt
+            productId={product.id}
+            productName={product.name}
+            heroColor={product.heroColor}
+            className="aspect-[4/3] w-full"
+          />
 
           <div className="flex flex-col gap-1">
             <h3 className="display text-xl font-bold text-flamingo-soft transition-colors group-hover:text-flamingo-pink">

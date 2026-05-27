@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import Image from "next/image";
 import dynamic from "next/dynamic";
 import { motion } from "framer-motion";
 import { Container } from "@/components/ui/Container";
@@ -16,9 +17,10 @@ const ProductRenderScene = dynamic(
 interface ProductHeroProps {
   product: Product;
   category?: Category;
+  realImageSrc?: string | null;
 }
 
-export function ProductHero({ product, category }: ProductHeroProps) {
+export function ProductHero({ product, category, realImageSrc }: ProductHeroProps) {
   return (
     <section className="relative overflow-hidden pt-32 sm:pt-40">
       <div
@@ -109,12 +111,50 @@ export function ProductHero({ product, category }: ProductHeroProps) {
             </motion.div>
           </div>
 
-          <div className="relative aspect-square overflow-hidden rounded-3xl border border-flamingo-titanium/10 shadow-cinema">
-            <ProductRenderScene color={product.heroColor} />
-            <div className="absolute bottom-4 left-4 right-4 flex items-center justify-between text-[10px] uppercase tracking-ultra text-flamingo-titanium">
-              <span>Drag to rotate</span>
-              <span>{product.id}</span>
-            </div>
+          <div
+            className="relative aspect-square overflow-hidden rounded-3xl border border-flamingo-titanium/10 shadow-cinema"
+            style={{
+              background: realImageSrc
+                ? `radial-gradient(ellipse at 30% 25%, ${product.heroColor}33, transparent 60%), #050505`
+                : undefined,
+            }}
+          >
+            {realImageSrc ? (
+              <>
+                <div
+                  aria-hidden
+                  className="pointer-events-none absolute -bottom-32 left-1/2 h-72 w-72 -translate-x-1/2 rounded-full opacity-60 blur-3xl"
+                  style={{ background: product.heroColor }}
+                />
+                <motion.div
+                  initial={{ y: 16, opacity: 0 }}
+                  animate={{ y: 0, opacity: 1 }}
+                  transition={{ duration: 1, ease: [0.16, 1, 0.3, 1] }}
+                  className="relative h-full w-full"
+                >
+                  <Image
+                    src={realImageSrc}
+                    alt={`${product.name} — ${product.id}`}
+                    fill
+                    sizes="(max-width: 1024px) 90vw, 560px"
+                    className="object-contain p-8"
+                    priority
+                  />
+                </motion.div>
+                <div className="absolute bottom-4 left-4 right-4 flex items-center justify-between text-[10px] uppercase tracking-ultra text-flamingo-titanium">
+                  <span>Live catalog photo</span>
+                  <span>{product.id}</span>
+                </div>
+              </>
+            ) : (
+              <>
+                <ProductRenderScene color={product.heroColor} />
+                <div className="absolute bottom-4 left-4 right-4 flex items-center justify-between text-[10px] uppercase tracking-ultra text-flamingo-titanium">
+                  <span>Drag to rotate</span>
+                  <span>{product.id}</span>
+                </div>
+              </>
+            )}
           </div>
         </div>
       </Container>

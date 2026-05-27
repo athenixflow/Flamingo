@@ -1,13 +1,11 @@
-"use client";
-
 import Link from "next/link";
-import { motion } from "framer-motion";
 import { Container } from "@/components/ui/Container";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { ScrollReveal } from "@/components/motion/ScrollReveal";
 import { getHeroProducts } from "@/content/products";
 import { GlassCard } from "@/components/ui/GlassCard";
 import { Button } from "@/components/ui/Button";
+import { ProductArt } from "@/components/ui/ProductArt";
 
 export function FeaturedProducts() {
   const products = getHeroProducts();
@@ -68,7 +66,12 @@ function ProductCard({
             </span>
           </div>
 
-          <BottleArt color={product.heroColor} />
+          <ProductArt
+            productId={product.id}
+            productName={product.name}
+            heroColor={product.heroColor}
+            className="aspect-square w-full"
+          />
 
           <div className="flex flex-col gap-2">
             <h3 className="display text-2xl font-bold text-flamingo-soft">
@@ -92,86 +95,6 @@ function ProductCard({
         </div>
       </GlassCard>
     </Link>
-  );
-}
-
-function BottleArt({ color }: { color: string }) {
-  return (
-    <motion.div
-      className="relative mx-auto h-56 w-32"
-      whileHover={{ scale: 1.04, rotate: -2 }}
-      transition={{ type: "spring", stiffness: 200, damping: 20 }}
-    >
-      <div
-        aria-hidden
-        className="absolute -inset-8 rounded-full opacity-40 blur-2xl"
-        style={{ background: color }}
-      />
-      <svg viewBox="0 0 120 220" className="relative h-full w-full" aria-hidden>
-        <defs>
-          <linearGradient id="bottleBody" x1="0" y1="0" x2="0" y2="1">
-            <stop offset="0%" stopColor="#1a1a1a" />
-            <stop offset="50%" stopColor="#050505" />
-            <stop offset="100%" stopColor="#000000" />
-          </linearGradient>
-          <linearGradient id="bottleHighlight" x1="0" y1="0" x2="1" y2="0">
-            <stop offset="0%" stopColor="rgba(255,255,255,0)" />
-            <stop offset="50%" stopColor="rgba(255,255,255,0.3)" />
-            <stop offset="100%" stopColor="rgba(255,255,255,0)" />
-          </linearGradient>
-        </defs>
-        <rect x="42" y="6" width="36" height="22" rx="4" fill="#2a2a2a" />
-        <rect x="46" y="24" width="28" height="10" fill="#1a1a1a" />
-        <path
-          d="M28 56 Q28 38 60 38 Q92 38 92 56 L92 200 Q92 214 78 214 L42 214 Q28 214 28 200 Z"
-          fill="url(#bottleBody)"
-          stroke={color}
-          strokeWidth="1"
-        />
-        <rect
-          x="28"
-          y="80"
-          width="64"
-          height="80"
-          fill={color}
-          opacity="0.85"
-        />
-        <rect x="28" y="80" width="64" height="80" fill="url(#bottleHighlight)" />
-        <text
-          x="60"
-          y="118"
-          textAnchor="middle"
-          fill="white"
-          fontSize="11"
-          fontWeight="700"
-          fontFamily="var(--font-display)"
-        >
-          FLAMINGO
-        </text>
-        <text
-          x="60"
-          y="138"
-          textAnchor="middle"
-          fill="white"
-          fontSize="8"
-          fontFamily="var(--font-display)"
-          letterSpacing="2"
-        >
-          NOTHING BUT
-        </text>
-        <text
-          x="60"
-          y="148"
-          textAnchor="middle"
-          fill="white"
-          fontSize="8"
-          fontFamily="var(--font-display)"
-          letterSpacing="2"
-        >
-          THE BEST
-        </text>
-      </svg>
-    </motion.div>
   );
 }
 

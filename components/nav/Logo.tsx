@@ -1,4 +1,8 @@
+"use client";
+
 import Link from "next/link";
+import Image from "next/image";
+import { useState } from "react";
 import { cn } from "@/lib/utils/cn";
 
 interface LogoProps {
@@ -6,12 +10,15 @@ interface LogoProps {
   size?: "sm" | "md" | "lg";
 }
 
+const SIZE_CLASSES = {
+  sm: { text: "text-base", image: "h-7" },
+  md: { text: "text-lg", image: "h-8" },
+  lg: { text: "text-2xl", image: "h-12" },
+};
+
 export function Logo({ className, size = "md" }: LogoProps) {
-  const sizes = {
-    sm: "text-base",
-    md: "text-lg",
-    lg: "text-2xl",
-  };
+  const sizes = SIZE_CLASSES[size];
+  const [imgFailed, setImgFailed] = useState(false);
 
   return (
     <Link
@@ -22,21 +29,35 @@ export function Logo({ className, size = "md" }: LogoProps) {
         className,
       )}
     >
-      <span
-        aria-hidden
-        className="relative inline-flex h-7 w-7 items-center justify-center rounded-full bg-flamingo-pink shadow-glow-soft"
-      >
-        <span className="absolute inset-1 rounded-full bg-flamingo-obsidian" />
-        <span className="relative h-2 w-2 rounded-full bg-flamingo-pink" />
-      </span>
-      <span
-        className={cn(
-          "display font-bold tracking-ultra text-flamingo-soft transition-colors group-hover:text-flamingo-pink",
-          sizes[size],
-        )}
-      >
-        Flamingo
-      </span>
+      {!imgFailed ? (
+        <Image
+          src="/images/brand/logo.jpg"
+          alt="Flamingo Car Care"
+          width={240}
+          height={64}
+          priority={size === "lg"}
+          onError={() => setImgFailed(true)}
+          className={cn("w-auto object-contain", sizes.image)}
+        />
+      ) : (
+        <span className="inline-flex items-center gap-2">
+          <span
+            aria-hidden
+            className="relative inline-flex h-7 w-7 items-center justify-center rounded-full bg-flamingo-pink shadow-glow-soft"
+          >
+            <span className="absolute inset-1 rounded-full bg-flamingo-obsidian" />
+            <span className="relative h-2 w-2 rounded-full bg-flamingo-pink" />
+          </span>
+          <span
+            className={cn(
+              "display font-bold tracking-ultra text-flamingo-soft transition-colors group-hover:text-flamingo-pink",
+              sizes.text,
+            )}
+          >
+            Flamingo
+          </span>
+        </span>
+      )}
     </Link>
   );
 }

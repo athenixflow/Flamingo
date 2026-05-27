@@ -8,6 +8,8 @@ import { cn } from "@/lib/utils/cn";
 interface LogoProps {
   className?: string;
   size?: "sm" | "md" | "lg";
+  /** Public URL of the brand logo image, or `null` to render the typographic fallback. */
+  src?: string | null;
 }
 
 const SIZE_CLASSES = {
@@ -16,9 +18,10 @@ const SIZE_CLASSES = {
   lg: { text: "text-2xl", image: "h-12" },
 };
 
-export function Logo({ className, size = "md" }: LogoProps) {
+export function Logo({ className, size = "md", src }: LogoProps) {
   const sizes = SIZE_CLASSES[size];
   const [imgFailed, setImgFailed] = useState(false);
+  const showImage = Boolean(src) && !imgFailed;
 
   return (
     <Link
@@ -29,9 +32,9 @@ export function Logo({ className, size = "md" }: LogoProps) {
         className,
       )}
     >
-      {!imgFailed ? (
+      {showImage ? (
         <Image
-          src="/images/brand/logo.jpg"
+          src={src as string}
           alt="Flamingo Car Care"
           width={240}
           height={64}

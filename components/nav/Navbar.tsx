@@ -10,7 +10,11 @@ import { Logo } from "./Logo";
 import { MobileMenu } from "./MobileMenu";
 import { Button } from "@/components/ui/Button";
 
-export function Navbar() {
+interface NavbarProps {
+  logoSrc?: string | null;
+}
+
+export function Navbar({ logoSrc }: NavbarProps = {}) {
   const pathname = usePathname();
   const [scrolled, setScrolled] = useState(false);
   const [open, setOpen] = useState(false);
@@ -37,7 +41,7 @@ export function Navbar() {
             scrolled ? "glass-strong" : "bg-transparent",
           )}
         >
-          <Logo />
+          <Logo src={logoSrc} />
 
           <ul className="hidden items-center gap-1 lg:flex">
             {NAV_ITEMS.map((item) => {
@@ -97,7 +101,7 @@ export function Navbar() {
         </nav>
       </header>
 
-      <MobileMenu open={open} onClose={() => setOpen(false)} />
+      <MobileMenu open={open} onClose={() => setOpen(false)} logoSrc={logoSrc} />
     </>
   );
 }

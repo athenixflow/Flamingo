@@ -5,6 +5,7 @@ import { LenisProvider } from "@/components/motion/LenisProvider";
 import { Navbar } from "@/components/nav/Navbar";
 import { Footer } from "@/components/nav/Footer";
 import { buildMetadata } from "@/lib/seo";
+import { getBrandLogo } from "@/lib/brand-assets";
 import "./globals.css";
 
 const display = Space_Grotesk({
@@ -35,6 +36,7 @@ export default function RootLayout({
 }: {
   children: React.ReactNode;
 }) {
+  const logoSrc = getBrandLogo();
   return (
     <html lang="en" className={`${display.variable} ${body.variable}`}>
       <body className="min-h-screen antialiased">
@@ -45,9 +47,9 @@ export default function RootLayout({
           Skip to main content
         </a>
         <LenisProvider>
-          <Navbar />
+          <Navbar logoSrc={logoSrc} />
           <main id="main">{children}</main>
-          <Footer />
+          <Footer logoSrc={logoSrc} />
         </LenisProvider>
         <Analytics />
       </body>

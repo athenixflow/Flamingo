@@ -8,6 +8,7 @@ import { SocialProof } from "@/components/sections/home/SocialProof";
 import { FinalCTA } from "@/components/sections/home/FinalCTA";
 import { LoaderOverlay } from "@/components/sections/home/LoaderOverlay";
 import { SITE } from "@/lib/seo";
+import { getBrandLogo } from "@/lib/brand-assets";
 
 const orgJsonLd = {
   "@context": "https://schema.org",
@@ -22,13 +23,14 @@ const orgJsonLd = {
 };
 
 export default function HomePage() {
+  const logoSrc = getBrandLogo();
   return (
     <>
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(orgJsonLd) }}
       />
-      <LoaderOverlay />
+      <LoaderOverlay logoSrc={logoSrc} />
       <Hero />
       <Transformation />
       <FeaturedProducts />

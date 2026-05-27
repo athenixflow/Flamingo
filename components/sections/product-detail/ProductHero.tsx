@@ -6,6 +6,7 @@ import dynamic from "next/dynamic";
 import { motion } from "framer-motion";
 import { Container } from "@/components/ui/Container";
 import { Button } from "@/components/ui/Button";
+import { ClientErrorBoundary } from "@/components/motion/ClientErrorBoundary";
 import type { Product } from "@/content/products";
 import type { Category } from "@/content/categories";
 
@@ -148,7 +149,24 @@ export function ProductHero({ product, category, realImageSrc }: ProductHeroProp
               </>
             ) : (
               <>
-                <ProductRenderScene color={product.heroColor} />
+                <ClientErrorBoundary
+                  name="ProductRenderScene"
+                  fallback={
+                    <div
+                      className="absolute inset-0"
+                      style={{
+                        background: `radial-gradient(ellipse at 30% 25%, ${product.heroColor}55, transparent 60%), #050505`,
+                      }}
+                    >
+                      <div className="grid-noise absolute inset-0 opacity-30" />
+                      <span className="display absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 text-2xl tracking-ultra text-flamingo-soft">
+                        {product.id}
+                      </span>
+                    </div>
+                  }
+                >
+                  <ProductRenderScene color={product.heroColor} />
+                </ClientErrorBoundary>
                 <div className="absolute bottom-4 left-4 right-4 flex items-center justify-between text-[10px] uppercase tracking-ultra text-flamingo-titanium">
                   <span>Drag to rotate</span>
                   <span>{product.id}</span>

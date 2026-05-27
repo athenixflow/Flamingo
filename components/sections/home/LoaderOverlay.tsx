@@ -5,7 +5,11 @@ import { useEffect, useState } from "react";
 import { Logo } from "@/components/nav/Logo";
 import { useReducedMotion } from "@/lib/hooks/useReducedMotion";
 
-export function LoaderOverlay() {
+interface LoaderOverlayProps {
+  logoSrc?: string | null;
+}
+
+export function LoaderOverlay({ logoSrc }: LoaderOverlayProps = {}) {
   const reduced = useReducedMotion();
   const [visible, setVisible] = useState(true);
 
@@ -52,7 +56,7 @@ export function LoaderOverlay() {
               transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
               className="relative"
             >
-              <Logo size="lg" />
+              <Logo size="lg" src={logoSrc} />
               <motion.span
                 aria-hidden
                 className="pointer-events-none absolute inset-0 bg-metal-sweep bg-[length:200%_100%]"

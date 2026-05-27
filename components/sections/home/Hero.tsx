@@ -5,6 +5,7 @@ import { motion } from "framer-motion";
 import { Button } from "@/components/ui/Button";
 import { Container } from "@/components/ui/Container";
 import { useReducedMotion } from "@/lib/hooks/useReducedMotion";
+import { ClientErrorBoundary } from "@/components/motion/ClientErrorBoundary";
 
 const HypercarScene = dynamic(
   () => import("@/components/three/HypercarScene").then((m) => m.HypercarScene),
@@ -31,7 +32,13 @@ export function Hero() {
       className="relative h-[100svh] min-h-[640px] w-full overflow-hidden"
     >
       <div className="absolute inset-0">
-        {reduced ? <HeroFallback /> : <HypercarScene />}
+        {reduced ? (
+          <HeroFallback />
+        ) : (
+          <ClientErrorBoundary name="HypercarScene" fallback={<HeroFallback />}>
+            <HypercarScene />
+          </ClientErrorBoundary>
+        )}
       </div>
 
       <div className="absolute inset-x-0 bottom-0 top-0 bg-gradient-to-b from-flamingo-obsidian/30 via-transparent to-flamingo-obsidian" />

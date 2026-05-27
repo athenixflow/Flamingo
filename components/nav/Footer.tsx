@@ -3,7 +3,11 @@ import { FOOTER_LINKS } from "@/content/nav";
 import { Logo } from "./Logo";
 import { Container } from "@/components/ui/Container";
 
-export function Footer() {
+interface FooterProps {
+  logoSrc?: string | null;
+}
+
+export function Footer({ logoSrc }: FooterProps = {}) {
   const year = new Date().getFullYear();
 
   return (
@@ -16,7 +20,7 @@ export function Footer() {
 
       <Container className="relative grid gap-16 py-20 md:grid-cols-[1.4fr_1fr_1fr_1fr]">
         <div className="flex flex-col gap-6">
-          <Logo size="lg" />
+          <Logo size="lg" src={logoSrc} />
           <p className="max-w-sm text-sm text-flamingo-titanium">
             Engineered automotive care for perfectionists. Nano ceramic
             coatings, polymer tire technology, and premium detailing systems —

@@ -10,9 +10,10 @@ import { Button } from "@/components/ui/Button";
 interface MobileMenuProps {
   open: boolean;
   onClose: () => void;
+  logoSrc?: string | null;
 }
 
-export function MobileMenu({ open, onClose }: MobileMenuProps) {
+export function MobileMenu({ open, onClose, logoSrc }: MobileMenuProps) {
   useEffect(() => {
     if (!open) return;
     const prev = document.body.style.overflow;
@@ -38,7 +39,7 @@ export function MobileMenu({ open, onClose }: MobileMenuProps) {
           className="fixed inset-0 z-50 flex flex-col bg-flamingo-obsidian/95 backdrop-blur-2xl"
         >
           <div className="container-flame flex items-center justify-between py-5">
-            <Logo />
+            <Logo src={logoSrc} />
             <button
               type="button"
               aria-label="Close menu"

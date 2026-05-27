@@ -8,6 +8,7 @@ import { ScrollReveal } from "@/components/motion/ScrollReveal";
 import { GlassCard } from "@/components/ui/GlassCard";
 import { COUNTRIES, STATS } from "@/content/global-presence";
 import { WorldMap } from "@/components/maps/WorldMap";
+import { ClientErrorBoundary } from "@/components/motion/ClientErrorBoundary";
 
 export function GlobalPresence() {
   const [activeCode, setActiveCode] = useState<string | null>(null);
@@ -35,11 +36,28 @@ export function GlobalPresence() {
         <div className="mt-16 grid gap-10 lg:grid-cols-[1.7fr_1fr] lg:items-stretch">
           <ScrollReveal>
             <GlassCard className="relative h-full overflow-hidden p-4 sm:p-6">
-              <WorldMap
-                countries={COUNTRIES}
-                activeCode={activeCode}
-                onHover={setActiveCode}
-              />
+              <ClientErrorBoundary
+                name="WorldMap"
+                fallback={
+                  <div className="flex aspect-[16/10] w-full flex-col items-center justify-center gap-3 text-center">
+                    <span className="display text-[10px] tracking-ultra text-flamingo-pink">
+                      Global Presence
+                    </span>
+                    <span className="display text-3xl text-flamingo-soft">
+                      Available in {STATS.countries}+ countries
+                    </span>
+                    <span className="text-xs uppercase tracking-ultra text-flamingo-titanium">
+                      Across {STATS.regions} regions · {STATS.oemPartners} OEM partners
+                    </span>
+                  </div>
+                }
+              >
+                <WorldMap
+                  countries={COUNTRIES}
+                  activeCode={activeCode}
+                  onHover={setActiveCode}
+                />
+              </ClientErrorBoundary>
             </GlassCard>
           </ScrollReveal>
 

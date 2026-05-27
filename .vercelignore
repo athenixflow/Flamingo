@@ -1,0 +1,20 @@
+# Vercel ignores during source upload — keep deploy bundle small.
+
+# dependencies and build output
+node_modules
+.next
+out
+build
+
+# local env / logs
+.env*.local
+*.log
+
+# dev tools and scrape artifacts (not needed at runtime)
+scripts
+content/scraped
+
+# editor / OS
+.vscode
+.idea
+.DS_Store

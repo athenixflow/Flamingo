@@ -47,7 +47,7 @@ export default async function ProductDetailPage({ params }: PageProps) {
     category: product.realCategory,
     description: product.longCopy,
     brand: { "@type": "Brand", name: "Flamingo Car Care" },
-    image: `${SITE.url}${realImage ?? "/images/og/default.jpg"}`,
+    image: `${SITE.url}${realImage ?? "/opengraph-image"}`,
   };
 
   return (

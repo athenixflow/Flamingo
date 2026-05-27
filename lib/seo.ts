@@ -16,10 +16,29 @@ export function buildMetadata({
   title,
   description = DEFAULT_DESCRIPTION,
   path = "/",
-  image = "/images/og/default.jpg",
+  image,
 }: BuildMetadataInput = {}): Metadata {
   const fullTitle = title ? `${title} — ${SITE_NAME}` : `${SITE_NAME} — Protect The Machine.`;
   const url = `${SITE_URL}${path}`;
+
+  // When no image override is provided, Next.js auto-discovers the dynamic
+  // opengraph-image.tsx at app/ (and any nested opengraph-image.tsx routes).
+  const openGraph: NonNullable<Metadata["openGraph"]> = {
+    type: "website",
+    url,
+    title: fullTitle,
+    description,
+    siteName: SITE_NAME,
+  };
+  const twitter: NonNullable<Metadata["twitter"]> = {
+    card: "summary_large_image",
+    title: fullTitle,
+    description,
+  };
+  if (image) {
+    openGraph.images = [{ url: image, width: 1200, height: 630, alt: fullTitle }];
+    twitter.images = [image];
+  }
 
   return {
     metadataBase: new URL(SITE_URL),
@@ -35,20 +54,8 @@ export function buildMetadata({
       "Flamingo car care",
     ],
     alternates: { canonical: url },
-    openGraph: {
-      type: "website",
-      url,
-      title: fullTitle,
-      description,
-      siteName: SITE_NAME,
-      images: [{ url: image, width: 1200, height: 630, alt: fullTitle }],
-    },
-    twitter: {
-      card: "summary_large_image",
-      title: fullTitle,
-      description,
-      images: [image],
-    },
+    openGraph,
+    twitter,
     robots: {
       index: true,
       follow: true,

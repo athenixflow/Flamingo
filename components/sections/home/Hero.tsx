@@ -1,16 +1,9 @@
 "use client";
 
-import dynamic from "next/dynamic";
 import { motion } from "framer-motion";
 import { Button } from "@/components/ui/Button";
 import { Container } from "@/components/ui/Container";
 import { useReducedMotion } from "@/lib/hooks/useReducedMotion";
-import { ClientErrorBoundary } from "@/components/motion/ClientErrorBoundary";
-
-const HypercarScene = dynamic(
-  () => import("@/components/three/HypercarScene").then((m) => m.HypercarScene),
-  { ssr: false, loading: () => <HeroFallback /> },
-);
 
 function HeroFallback() {
   return (
@@ -23,6 +16,24 @@ function HeroFallback() {
   );
 }
 
+function HeroVideo() {
+  return (
+    <video
+      className="h-full w-full object-cover"
+      autoPlay
+      muted
+      loop
+      playsInline
+      preload="auto"
+      poster="/images/products/9h-nano-ceramic-coating.jpg"
+      aria-hidden
+      style={{ filter: "brightness(0.55) contrast(1.08) saturate(1.05)" }}
+    >
+      <source src="/videos/hero-amg-gle.mp4" type="video/mp4" />
+    </video>
+  );
+}
+
 export function Hero() {
   const reduced = useReducedMotion();
 
@@ -31,28 +42,47 @@ export function Hero() {
       aria-labelledby="hero-heading"
       className="relative min-h-[100svh] w-full overflow-hidden"
     >
-      <div className="absolute inset-0">
-        {reduced ? (
-          <HeroFallback />
-        ) : (
-          <ClientErrorBoundary name="HypercarScene" fallback={<HeroFallback />}>
-            <HypercarScene />
-          </ClientErrorBoundary>
-        )}
+      {/* Video stage — radial mask fades the footage into the obsidian site bg at every edge */}
+      <div
+        className="absolute inset-0"
+        style={{
+          WebkitMaskImage:
+            "radial-gradient(ellipse 78% 70% at 50% 50%, #000 45%, rgba(0,0,0,0.55) 75%, transparent 100%)",
+          maskImage:
+            "radial-gradient(ellipse 78% 70% at 50% 50%, #000 45%, rgba(0,0,0,0.55) 75%, transparent 100%)",
+        }}
+      >
+        {reduced ? <HeroFallback /> : <HeroVideo />}
       </div>
 
-      <div className="absolute inset-x-0 bottom-0 top-0 bg-gradient-to-b from-flamingo-obsidian/30 via-transparent to-flamingo-obsidian" />
-      <div className="absolute inset-0 bg-gradient-to-r from-flamingo-obsidian/85 via-flamingo-obsidian/30 to-transparent" />
+      {/* Inward vignette — soft center contrast lift + hard edge fade to obsidian */}
+      <div
+        aria-hidden
+        className="pointer-events-none absolute inset-0"
+        style={{
+          background:
+            "radial-gradient(ellipse 85% 70% at 50% 50%, rgba(5,5,5,0.25) 0%, rgba(5,5,5,0.55) 55%, rgba(5,5,5,0.9) 80%, rgb(5,5,5) 100%)",
+        }}
+      />
+      <div
+        aria-hidden
+        className="pointer-events-none absolute inset-x-0 top-0 h-48 bg-gradient-to-b from-flamingo-obsidian via-flamingo-obsidian/80 to-transparent"
+      />
+      <div
+        aria-hidden
+        className="pointer-events-none absolute inset-x-0 bottom-0 h-64 bg-gradient-to-t from-flamingo-obsidian via-flamingo-obsidian/85 to-transparent"
+      />
 
-      <Container className="relative flex min-h-[100svh] flex-col justify-end pb-32 pt-44 sm:pb-36 sm:pt-52">
+      <Container className="relative flex min-h-[100svh] flex-col items-center justify-center pb-32 pt-44 text-center sm:pb-36 sm:pt-52">
         <motion.div
           initial={{ y: 24, opacity: 0 }}
           animate={{ y: 0, opacity: 1 }}
           transition={{ delay: 0.4, duration: 1, ease: [0.16, 1, 0.3, 1] }}
-          className="text-eyebrow mb-5 flex items-center gap-3"
+          className="text-eyebrow mb-6 flex items-center justify-center gap-3"
         >
           <span aria-hidden className="h-px w-10 bg-flamingo-titanium/60" />
           Engineered in USA · Nothing But The Best
+          <span aria-hidden className="h-px w-10 bg-flamingo-titanium/60" />
         </motion.div>
 
         <motion.h1
@@ -60,7 +90,7 @@ export function Hero() {
           initial={{ y: 60, opacity: 0 }}
           animate={{ y: 0, opacity: 1 }}
           transition={{ delay: 0.5, duration: 1.2, ease: [0.16, 1, 0.3, 1] }}
-          className="text-mega max-w-5xl text-flamingo-soft"
+          className="text-mega mx-auto max-w-5xl text-flamingo-soft"
         >
           Protect
           <br />
@@ -71,7 +101,7 @@ export function Hero() {
           initial={{ y: 30, opacity: 0 }}
           animate={{ y: 0, opacity: 1 }}
           transition={{ delay: 0.8, duration: 1, ease: [0.16, 1, 0.3, 1] }}
-          className="mt-6 max-w-xl text-base text-flamingo-titanium md:text-lg"
+          className="mx-auto mt-7 max-w-xl text-base text-flamingo-titanium md:text-lg"
         >
           Engineered automotive care for perfectionists. Nano ceramic coatings,
           polymer tire technology, and premium detailing systems trusted by
@@ -82,7 +112,7 @@ export function Hero() {
           initial={{ y: 30, opacity: 0 }}
           animate={{ y: 0, opacity: 1 }}
           transition={{ delay: 1, duration: 0.9, ease: [0.16, 1, 0.3, 1] }}
-          className="mt-10 flex flex-wrap items-center gap-4"
+          className="mt-10 flex flex-wrap items-center justify-center gap-4"
         >
           <Button href="/products" size="lg">
             Explore Products

@@ -25,6 +25,20 @@ export function ProductCatalog() {
     return PRODUCTS.filter((p) => p.category === filter);
   }, [filter]);
 
+  // Group visible products by category for H2 semantic structure when "all".
+  const groups =
+    filter === "all"
+      ? CATEGORIES.map((cat) => ({
+          category: cat,
+          products: visible.filter((p) => p.category === cat.id),
+        })).filter((g) => g.products.length > 0)
+      : [
+          {
+            category: CATEGORIES.find((c) => c.id === filter)!,
+            products: visible,
+          },
+        ];
+
   return (
     <section className="pb-32" aria-labelledby="catalog">
       <Container>
@@ -39,7 +53,7 @@ export function ProductCatalog() {
                     type="button"
                     onClick={() => setFilter(f.id)}
                     className={cn(
-                      "relative shrink-0 rounded-full px-4 py-2 text-xs font-medium uppercase tracking-ultra transition-colors no-tap-highlight",
+                      "text-meta relative shrink-0 rounded-full px-4 py-2 transition-colors no-tap-highlight",
                       active
                         ? "text-white"
                         : "text-flamingo-titanium hover:text-flamingo-soft",
@@ -60,21 +74,42 @@ export function ProductCatalog() {
           </div>
         </div>
 
-        <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-          <AnimatePresence mode="popLayout">
-            {visible.map((p) => (
-              <motion.div
-                key={p.id}
-                layout
-                initial={{ opacity: 0, y: 16 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, scale: 0.96 }}
-                transition={{ duration: 0.45, ease: [0.16, 1, 0.3, 1] }}
-              >
-                <CatalogCard product={p} />
-              </motion.div>
-            ))}
-          </AnimatePresence>
+        <div className="flex flex-col gap-16">
+          {groups.map((group) => (
+            <div key={group.category.id}>
+              <div className="mb-8 flex flex-col gap-2 sm:flex-row sm:items-end sm:justify-between">
+                <div className="flex flex-col gap-2">
+                  <span className="text-eyebrow text-flamingo-titanium">
+                    {group.category.realCategories.join(" · ")}
+                  </span>
+                  <h2 className="display text-3xl text-flamingo-soft sm:text-4xl">
+                    {group.category.name}
+                  </h2>
+                </div>
+                <span className="text-meta text-flamingo-titanium">
+                  {group.products.length}{" "}
+                  {group.products.length === 1 ? "SKU" : "SKUs"}
+                </span>
+              </div>
+
+              <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+                <AnimatePresence mode="popLayout">
+                  {group.products.map((p) => (
+                    <motion.div
+                      key={p.id}
+                      layout
+                      initial={{ opacity: 0, y: 16 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      exit={{ opacity: 0, scale: 0.96 }}
+                      transition={{ duration: 0.45, ease: [0.16, 1, 0.3, 1] }}
+                    >
+                      <CatalogCard product={p} />
+                    </motion.div>
+                  ))}
+                </AnimatePresence>
+              </div>
+            </div>
+          ))}
         </div>
 
         {visible.length === 0 && (
@@ -97,10 +132,10 @@ function CatalogCard({
       <GlassCard className="h-full overflow-hidden p-6">
         <div className="flex h-full flex-col gap-5">
           <div className="flex items-center justify-between">
-            <span className="display rounded-full bg-flamingo-obsidian/70 px-3 py-1 text-[10px] tracking-ultra text-flamingo-titanium">
+            <span className="text-meta rounded-full bg-flamingo-obsidian/70 px-3 py-1 text-flamingo-titanium">
               {product.id}
             </span>
-            <span className="display text-[10px] uppercase tracking-ultra text-flamingo-pink">
+            <span className="text-meta text-flamingo-titanium">
               {product.realCategory}
             </span>
           </div>
@@ -116,16 +151,16 @@ function CatalogCard({
             <h3 className="display text-xl font-bold text-flamingo-soft transition-colors group-hover:text-flamingo-pink">
               {product.name}
             </h3>
-            <p className="text-sm text-flamingo-pink">{product.tagline}</p>
+            <p className="text-sm text-flamingo-cyan">{product.tagline}</p>
           </div>
 
           <p className="line-clamp-3 text-sm text-flamingo-titanium">
             {product.shortBlurb}
           </p>
 
-          <div className="mt-auto flex items-center justify-between border-t border-flamingo-titanium/10 pt-3 text-xs">
-            <span className="text-flamingo-titanium">{product.specs.volume}</span>
-            <span className="display inline-flex items-center gap-1 text-flamingo-soft transition-colors group-hover:text-flamingo-pink">
+          <div className="mt-auto flex items-center justify-between border-t border-flamingo-titanium/10 pt-3">
+            <span className="text-meta text-flamingo-titanium">{product.specs.volume}</span>
+            <span className="text-meta inline-flex items-center gap-1 text-flamingo-soft transition-colors group-hover:text-flamingo-pink">
               View detail →
             </span>
           </div>

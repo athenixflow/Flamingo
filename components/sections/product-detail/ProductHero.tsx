@@ -51,9 +51,9 @@ export function ProductHero({ product, category, realImageSrc }: ProductHeroProp
               initial={{ y: 12, opacity: 0 }}
               animate={{ y: 0, opacity: 1 }}
               transition={{ duration: 0.6 }}
-              className="display inline-flex w-fit items-center gap-3 rounded-full border border-flamingo-pink/30 px-4 py-1.5 text-[10px] tracking-ultra text-flamingo-pink"
+              className="text-meta inline-flex w-fit items-center gap-3 rounded-full border border-flamingo-titanium/30 px-4 py-1.5 text-flamingo-titanium"
             >
-              <span className="h-1 w-1 rounded-full bg-flamingo-pink" />
+              <span className="h-1 w-1 rounded-full bg-flamingo-cyan" />
               {product.id} · {product.realCategory}
             </motion.span>
 

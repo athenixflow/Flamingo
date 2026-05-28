@@ -10,14 +10,12 @@ export default function NotFound() {
       />
       <div
         aria-hidden
-        className="pointer-events-none absolute left-1/2 top-1/2 h-[500px] w-[500px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-flamingo-pink/15 blur-3xl"
+        className="pointer-events-none absolute left-1/2 top-1/2 h-[500px] w-[500px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-flamingo-violet/12 blur-3xl"
       />
 
       <Container className="relative text-center">
-        <span className="display text-[10px] tracking-ultra text-flamingo-pink">
-          Error 404
-        </span>
-        <h1 className="display mt-6 text-7xl font-bold text-flamingo-soft sm:text-8xl lg:text-9xl">
+        <span className="text-eyebrow text-flamingo-titanium">Error 404</span>
+        <h1 className="text-mega mt-6 text-flamingo-soft">
           <span className="text-gradient-pink">Off Route.</span>
         </h1>
         <p className="mx-auto mt-6 max-w-xl text-flamingo-titanium">

@@ -58,10 +58,10 @@ export default async function AcademyLessonPage({ params }: PageProps) {
             <span className="text-flamingo-soft">{lesson.topic}</span>
           </nav>
 
-          <h1 className="display mt-6 max-w-4xl text-4xl font-bold leading-[1] text-flamingo-soft sm:text-5xl lg:text-6xl">
+          <h1 className="text-mega mt-6 max-w-5xl text-flamingo-soft">
             {lesson.title}
           </h1>
-          <p className="mt-4 text-flamingo-pink">{lesson.duration}</p>
+          <p className="text-meta mt-6 text-flamingo-titanium">{lesson.duration}</p>
           <p className="mt-6 max-w-2xl text-base text-flamingo-titanium md:text-lg">
             {lesson.summary}
           </p>
@@ -72,7 +72,7 @@ export default async function AcademyLessonPage({ params }: PageProps) {
         <Container className="grid gap-12 lg:grid-cols-[1fr_3fr]">
           <aside className="hidden lg:block">
             <div className="sticky top-32">
-              <span className="display text-[10px] tracking-ultra text-flamingo-pink">
+              <span className="text-eyebrow text-flamingo-titanium">
                 Chapters
               </span>
               <ol className="mt-4 flex flex-col gap-3 text-sm text-flamingo-titanium">
@@ -93,7 +93,7 @@ export default async function AcademyLessonPage({ params }: PageProps) {
           <article className="flex flex-col gap-12">
             {lesson.chapters.map((c, i) => (
               <section key={i} id={`ch-${i}`}>
-                <span className="display text-[10px] tracking-ultra text-flamingo-pink">
+                <span className="text-eyebrow text-flamingo-titanium">
                   Chapter {String(i + 1).padStart(2, "0")}
                 </span>
                 <h2 className="display mt-2 text-3xl text-flamingo-soft sm:text-4xl">
@@ -107,7 +107,7 @@ export default async function AcademyLessonPage({ params }: PageProps) {
 
             {relatedProducts.length > 0 && (
               <section>
-                <span className="display text-[10px] tracking-ultra text-flamingo-pink">
+                <span className="text-eyebrow text-flamingo-titanium">
                   Related Products
                 </span>
                 <h2 className="display mt-2 text-2xl text-flamingo-soft">
@@ -125,7 +125,7 @@ export default async function AcademyLessonPage({ params }: PageProps) {
                           <span className="display rounded-full bg-flamingo-obsidian/70 px-3 py-1 text-[10px] tracking-ultra text-flamingo-titanium">
                             {p.id}
                           </span>
-                          <span className="display text-[10px] tracking-ultra text-flamingo-pink">
+                          <span className="text-eyebrow text-flamingo-titanium">
                             {p.realCategory}
                           </span>
                         </div>
@@ -144,7 +144,7 @@ export default async function AcademyLessonPage({ params }: PageProps) {
 
             <div className="mt-8 flex flex-col gap-4 rounded-3xl border border-flamingo-titanium/10 p-8 sm:flex-row sm:items-center sm:justify-between">
               <div>
-                <span className="display text-[10px] tracking-ultra text-flamingo-pink">
+                <span className="text-eyebrow text-flamingo-titanium">
                   More Lessons
                 </span>
                 <h3 className="display mt-2 text-2xl text-flamingo-soft">

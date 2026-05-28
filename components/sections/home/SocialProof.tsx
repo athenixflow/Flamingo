@@ -5,9 +5,16 @@ import { Container } from "@/components/ui/Container";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { ScrollReveal } from "@/components/motion/ScrollReveal";
 import { GlassCard } from "@/components/ui/GlassCard";
-import { TESTIMONIALS } from "@/content/testimonials";
+import { TESTIMONIALS, type Testimonial } from "@/content/testimonials";
 
-const PLATFORM_ICON: Record<string, React.ReactNode> = {
+const PLATFORM_ACCENT: Record<Testimonial["platform"], string> = {
+  Instagram: "#F5F5F5",
+  TikTok: "#00CFFF",
+  YouTube: "#FF3D45",
+  Distributor: "#FFA55A",
+};
+
+const PLATFORM_ICON: Record<Testimonial["platform"], React.ReactNode> = {
   Instagram: <DotPattern />,
   TikTok: <WavePattern />,
   YouTube: <PlayPattern />,
@@ -15,6 +22,10 @@ const PLATFORM_ICON: Record<string, React.ReactNode> = {
 };
 
 export function SocialProof() {
+  // Bento layout: pick 2 "feature" tiles and 6 regular tiles
+  const feature = TESTIMONIALS.slice(0, 2);
+  const regular = TESTIMONIALS.slice(2, 8);
+
   return (
     <section
       aria-labelledby="social-heading"
@@ -24,58 +35,140 @@ export function SocialProof() {
         <ScrollReveal>
           <SectionHeading
             eyebrow="Social Proof"
-            title="The detailing world has been talking."
+            title="The detailing world"
+            accentTitle="has been talking."
             description="Creators, professionals, and distributors who've put the catalog to work."
           />
         </ScrollReveal>
 
-        <div className="mt-14 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
-          {TESTIMONIALS.map((t, i) => (
-            <ScrollReveal key={t.id} delay={(i % 4) * 0.06}>
-              <GlassCard className="group relative h-full overflow-hidden p-6">
-                <div
-                  aria-hidden
-                  className="pointer-events-none absolute inset-0 opacity-30 transition-opacity duration-500 group-hover:opacity-60"
-                  style={{
-                    background: `radial-gradient(circle at 30% 20%, ${t.posterColor}33, transparent 60%)`,
-                  }}
-                />
-                <div className="relative flex h-full flex-col gap-5">
-                  <div className="flex items-center justify-between">
-                    <span className="display text-[10px] tracking-ultra text-flamingo-titanium">
-                      {t.platform}
-                    </span>
-                    <motion.span
-                      aria-hidden
-                      className="text-flamingo-pink"
-                      animate={{ rotate: [0, 360] }}
-                      transition={{ duration: 30, repeat: Infinity, ease: "linear" }}
-                    >
-                      {PLATFORM_ICON[t.platform]}
-                    </motion.span>
-                  </div>
+        <div className="mt-14 grid auto-rows-fr gap-5 sm:grid-cols-2 lg:grid-cols-4">
+          {/* Feature 0 — spans 2 cols, 2 rows on lg */}
+          <FeatureTile testimonial={feature[0]} index={0} className="lg:col-span-2 lg:row-span-2" />
 
-                  <p className="flex-1 text-sm text-flamingo-soft">
-                    &ldquo;{t.quote}&rdquo;
-                  </p>
+          {/* Two small tiles on the right column at lg, stacked above feature 1 */}
+          <RegularTile testimonial={regular[0]} index={2} />
+          <RegularTile testimonial={regular[1]} index={3} />
 
-                  <div className="flex items-center justify-between border-t border-flamingo-titanium/10 pt-4">
-                    <span className="display text-xs text-flamingo-pink">
-                      {t.handle}
-                    </span>
-                    {t.context && (
-                      <span className="text-[10px] uppercase tracking-ultra text-flamingo-titanium">
-                        {t.context}
-                      </span>
-                    )}
-                  </div>
-                </div>
-              </GlassCard>
-            </ScrollReveal>
+          {/* Feature 1 — spans 2 cols at lg, below feature 0 */}
+          <FeatureTile testimonial={feature[1]} index={1} className="lg:col-span-2" />
+
+          {/* Remaining 4 regular tiles */}
+          {regular.slice(2).map((t, i) => (
+            <RegularTile key={t.id} testimonial={t} index={4 + i} />
           ))}
         </div>
       </Container>
     </section>
+  );
+}
+
+function FeatureTile({
+  testimonial: t,
+  index,
+  className,
+}: {
+  testimonial: Testimonial;
+  index: number;
+  className?: string;
+}) {
+  const accent = PLATFORM_ACCENT[t.platform];
+  return (
+    <ScrollReveal delay={(index % 4) * 0.06} className={className}>
+      <GlassCard
+        className="group relative h-full overflow-hidden p-8 sm:p-10"
+      >
+        {/* Vertical accent bar — left edge */}
+        <div
+          aria-hidden
+          className="pointer-events-none absolute inset-y-6 left-0 w-px transition-all duration-500 group-hover:w-1"
+          style={{ background: accent }}
+        />
+
+        <div
+          aria-hidden
+          className="pointer-events-none absolute inset-0 opacity-25 transition-opacity duration-500 group-hover:opacity-50"
+          style={{
+            background: `radial-gradient(circle at 30% 20%, ${accent}33, transparent 60%)`,
+          }}
+        />
+
+        <div className="relative flex h-full flex-col gap-6 pl-3 sm:pl-4">
+          <div className="flex items-center justify-between">
+            <span className="text-meta text-flamingo-titanium" style={{ color: accent }}>
+              {t.platform}
+            </span>
+            <motion.span
+              aria-hidden
+              style={{ color: accent }}
+              animate={{ rotate: [0, 360] }}
+              transition={{ duration: 40, repeat: Infinity, ease: "linear" }}
+            >
+              {PLATFORM_ICON[t.platform]}
+            </motion.span>
+          </div>
+
+          <p className="text-display flex-1 text-flamingo-soft">
+            &ldquo;{t.quote}&rdquo;
+          </p>
+
+          <div className="flex items-center justify-between border-t border-flamingo-titanium/10 pt-4">
+            <span className="display text-sm text-flamingo-soft">{t.handle}</span>
+            {t.context && (
+              <span className="text-meta text-flamingo-titanium">
+                {t.context}
+              </span>
+            )}
+          </div>
+        </div>
+      </GlassCard>
+    </ScrollReveal>
+  );
+}
+
+function RegularTile({
+  testimonial: t,
+  index,
+}: {
+  testimonial: Testimonial;
+  index: number;
+}) {
+  const accent = PLATFORM_ACCENT[t.platform];
+  return (
+    <ScrollReveal delay={(index % 4) * 0.06}>
+      <GlassCard className="group relative h-full overflow-hidden p-6">
+        <div
+          aria-hidden
+          className="pointer-events-none absolute inset-y-5 left-0 w-px transition-all duration-500 group-hover:w-[3px]"
+          style={{ background: accent }}
+        />
+
+        <div className="relative flex h-full flex-col gap-5 pl-3">
+          <div className="flex items-center justify-between">
+            <span className="text-meta" style={{ color: accent }}>
+              {t.platform}
+            </span>
+            <span aria-hidden style={{ color: accent }}>
+              {PLATFORM_ICON[t.platform]}
+            </span>
+          </div>
+
+          <p className="flex-1 text-sm text-flamingo-soft">
+            &ldquo;{t.quote}&rdquo;
+          </p>
+
+          <div className="flex items-center justify-between border-t border-flamingo-titanium/10 pt-4">
+            <span className="display text-xs" style={{ color: accent }}>
+              {t.handle}
+            </span>
+            {t.context && (
+              <span className="text-meta text-flamingo-titanium">
+                {t.context}
+              </span>
+            )}
+          </div>
+        </div>
+      </GlassCard>
+    </ScrollReveal>
   );
 }
 

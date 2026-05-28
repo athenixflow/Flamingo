@@ -17,7 +17,7 @@ export function ProductsHero() {
       />
       <div
         aria-hidden
-        className="pointer-events-none absolute -top-40 right-1/3 h-96 w-96 rounded-full bg-flamingo-pink/20 blur-3xl"
+        className="pointer-events-none absolute -top-40 right-1/3 h-96 w-96 rounded-full bg-flamingo-cyan/12 blur-3xl"
       />
       <div
         aria-hidden
@@ -29,9 +29,9 @@ export function ProductsHero() {
           initial={{ y: 16, opacity: 0 }}
           animate={{ y: 0, opacity: 1 }}
           transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
-          className="display flex items-center gap-3 text-xs tracking-ultra text-flamingo-pink"
+          className="text-eyebrow flex items-center gap-3"
         >
-          <span aria-hidden className="h-px w-10 bg-flamingo-pink" />
+          <span aria-hidden className="h-px w-10 bg-flamingo-titanium/60" />
           The Catalog
         </motion.span>
 
@@ -40,7 +40,7 @@ export function ProductsHero() {
           initial={{ y: 32, opacity: 0 }}
           animate={{ y: 0, opacity: 1 }}
           transition={{ delay: 0.1, duration: 1, ease: [0.16, 1, 0.3, 1] }}
-          className="display mt-6 max-w-4xl text-5xl font-bold leading-[0.95] text-flamingo-soft sm:text-6xl lg:text-7xl"
+          className="text-mega mt-6 max-w-5xl text-flamingo-soft"
         >
           Every formula in the lineup.
           <br />

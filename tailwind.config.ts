@@ -17,6 +17,7 @@ const config: Config = {
           soft: "#F5F5F5",
           violet: "#8A2EFF",
           cyan: "#00CFFF",
+          ember: "#FFA55A",
         },
       },
       fontFamily: {

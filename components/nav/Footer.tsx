@@ -12,10 +12,10 @@ export function Footer({ logoSrc }: FooterProps = {}) {
 
   return (
     <footer className="relative mt-32 overflow-hidden border-t border-flamingo-titanium/10 bg-flamingo-obsidian">
-      <div className="pointer-events-none absolute inset-x-0 -top-px h-px bg-gradient-to-r from-transparent via-flamingo-pink/60 to-transparent" />
+      <div className="pointer-events-none absolute inset-x-0 -top-px h-px bg-gradient-to-r from-transparent via-flamingo-titanium/40 to-transparent" />
       <div
         aria-hidden
-        className="pointer-events-none absolute -bottom-32 left-1/2 h-96 w-[120%] -translate-x-1/2 rounded-[50%] bg-flamingo-pink/10 blur-3xl"
+        className="pointer-events-none absolute -bottom-32 left-1/2 h-96 w-[120%] -translate-x-1/2 rounded-[50%] bg-flamingo-violet/8 blur-3xl"
       />
 
       <Container className="relative grid gap-16 py-20 md:grid-cols-[1.4fr_1fr_1fr_1fr]">
@@ -26,7 +26,7 @@ export function Footer({ logoSrc }: FooterProps = {}) {
             coatings, polymer tire technology, and premium detailing systems —
             engineered in USA.
           </p>
-          <p className="display text-[10px] uppercase tracking-ultra text-flamingo-pink">
+          <p className="text-eyebrow text-flamingo-titanium">
             Protect The Machine.
           </p>
         </div>

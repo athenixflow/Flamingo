@@ -49,7 +49,8 @@ export function Transformation() {
         <ScrollReveal>
           <SectionHeading
             eyebrow="Transformation"
-            title="Before. After. Engineered in between."
+            title="Before. After."
+            accentTitle="Engineered in between."
             description="The hydrophobic polymer + ozone formula at the heart of our tire chemistry — visible in slow motion."
           />
         </ScrollReveal>
@@ -57,7 +58,7 @@ export function Transformation() {
         <ScrollReveal delay={0.1}>
           <div
             ref={ref}
-            className="relative mt-12 aspect-[16/9] w-full select-none overflow-hidden rounded-3xl border border-flamingo-titanium/10 shadow-cinema"
+            className="relative mt-12 aspect-[3/4] w-full select-none overflow-hidden rounded-3xl border border-flamingo-titanium/10 shadow-cinema sm:aspect-[4/3] lg:aspect-[16/9]"
             onPointerDown={(e) => {
               dragging.current = true;
               updateFromClient(e.clientX);
@@ -82,7 +83,7 @@ export function Transformation() {
               className="pointer-events-none absolute inset-y-0 flex w-px items-center justify-center bg-flamingo-pink shadow-glow"
               style={{ left: `${pos}%` }}
             >
-              <span className="display absolute -top-7 -translate-x-1/2 text-[10px] tracking-ultra text-flamingo-pink">
+              <span className="text-eyebrow absolute -top-7 -translate-x-1/2 text-flamingo-pink">
                 Before / After
               </span>
               <span className="flex h-12 w-12 -translate-x-1/2 items-center justify-center rounded-full bg-flamingo-pink shadow-glow">

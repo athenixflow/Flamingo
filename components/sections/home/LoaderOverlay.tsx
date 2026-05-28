@@ -77,7 +77,7 @@ export function LoaderOverlay({ logoSrc }: LoaderOverlayProps = {}) {
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ delay: 0.4 }}
-              className="display text-[10px] tracking-ultra text-flamingo-titanium"
+              className="text-eyebrow text-flamingo-titanium"
             >
               Engineered in USA · Nothing But The Best
             </motion.span>

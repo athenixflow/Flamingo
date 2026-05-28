@@ -24,8 +24,8 @@ export function ProductTechnology({ product }: { product: Product }) {
       <Container>
         <SectionHeading
           eyebrow="Technology"
-          title="The chemistry that makes it work."
-          accent
+          title="The chemistry that"
+          accentTitle="makes it work."
         />
 
         <GlassCard className="mt-12 overflow-hidden">

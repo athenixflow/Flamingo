@@ -36,7 +36,7 @@ export function UsageGuide({ product }: { product: Product }) {
 
         {product.cautions.length > 0 && (
           <div className="mt-14 rounded-3xl border border-flamingo-pink/30 bg-flamingo-pink/5 p-8">
-            <h3 className="display text-[10px] tracking-ultra text-flamingo-pink">
+            <h3 className="text-eyebrow text-flamingo-pink">
               Cautions
             </h3>
             <ul className="mt-4 flex flex-col gap-2 text-sm text-flamingo-titanium">
@@ -95,7 +95,7 @@ function Step({
       className="flex gap-6 rounded-2xl border border-flamingo-titanium/10 bg-flamingo-carbon/30 p-8"
     >
       <div className="flex flex-col items-center gap-2">
-        <span className="display text-xs tracking-ultra text-flamingo-pink">
+        <span className="text-meta text-flamingo-titanium">
           {String(index).padStart(2, "0")}/{String(total).padStart(2, "0")}
         </span>
         <span className="h-12 w-px bg-flamingo-titanium/20" />

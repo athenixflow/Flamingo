@@ -23,17 +23,17 @@ export function RelatedProducts({ products }: { products: Product[] }) {
             >
               <GlassCard className="h-full overflow-hidden p-6">
                 <div className="flex items-center justify-between">
-                  <span className="display rounded-full bg-flamingo-obsidian/70 px-3 py-1 text-[10px] tracking-ultra text-flamingo-titanium">
+                  <span className="text-meta rounded-full bg-flamingo-obsidian/70 px-3 py-1 text-flamingo-titanium">
                     {p.id}
                   </span>
-                  <span className="display text-[10px] uppercase tracking-ultra text-flamingo-pink">
+                  <span className="text-meta text-flamingo-titanium">
                     {p.realCategory}
                   </span>
                 </div>
                 <h3 className="mt-6 display text-xl text-flamingo-soft transition-colors group-hover:text-flamingo-pink">
                   {p.name}
                 </h3>
-                <p className="mt-2 text-sm text-flamingo-pink">{p.tagline}</p>
+                <p className="mt-2 text-sm text-flamingo-cyan">{p.tagline}</p>
                 <p className="mt-4 line-clamp-2 text-sm text-flamingo-titanium">
                   {p.shortBlurb}
                 </p>

@@ -38,7 +38,7 @@ export function MediaReels() {
               <div className="absolute inset-0 bg-gradient-to-t from-flamingo-obsidian via-flamingo-obsidian/40 to-transparent" />
 
               <div className="absolute inset-x-0 bottom-0 p-8 sm:p-12">
-                <span className="display text-[10px] uppercase tracking-ultra text-flamingo-pink">
+                <span className="text-eyebrow text-flamingo-titanium">
                   {active.category} · {active.duration}
                 </span>
                 <h2
@@ -68,7 +68,7 @@ export function MediaReels() {
 
       <section className="pb-32 pt-12" aria-labelledby="reel-grid">
         <Container>
-          <h2 id="reel-grid" className="display text-xs tracking-ultra text-flamingo-pink">
+          <h2 id="reel-grid" className="text-eyebrow text-flamingo-titanium">
             All Reels
           </h2>
           <div className="mt-6 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
@@ -99,7 +99,7 @@ export function MediaReels() {
                       </span>
                     </div>
                     <div className="p-5">
-                      <span className="display text-[10px] uppercase tracking-ultra text-flamingo-pink">
+                      <span className="text-meta text-flamingo-titanium">
                         {reel.category}
                       </span>
                       <h3 className="mt-2 display text-lg text-flamingo-soft">

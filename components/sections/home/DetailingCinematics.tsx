@@ -67,13 +67,16 @@ function CinematicCard({
   const y = useTransform(scrollYProgress, [0, 1], ["10%", "-10%"]);
   const opacity = useTransform(scrollYProgress, [0, 0.3, 0.7, 1], [0.4, 1, 1, 0.4]);
 
+  // Pseudo-cinema frame counter (deterministic per reel)
+  const frameNo = 1042 + index * 873;
+
   return (
     <motion.div
       ref={ref}
       style={{ opacity }}
       className="relative overflow-hidden rounded-3xl border border-flamingo-titanium/10 shadow-cinema"
     >
-      <div className="relative aspect-[21/9] w-full overflow-hidden">
+      <div className="relative aspect-[3/2] w-full overflow-hidden sm:aspect-[16/9] lg:aspect-[21/9]">
         <motion.div
           aria-hidden
           style={{ y, background: clip.bg }}
@@ -82,22 +85,53 @@ function CinematicCard({
         <ParallaxLayer accent={clip.accent} index={index} />
         <div className="absolute inset-0 bg-gradient-to-t from-flamingo-obsidian via-flamingo-obsidian/30 to-transparent" />
 
-        <div className="absolute inset-0 flex flex-col justify-end p-8 sm:p-12">
+        {/* 35mm filmstrip — top + bottom perforation bars */}
+        <FilmstripBar position="top" />
+        <FilmstripBar position="bottom" />
+
+        <div className="absolute inset-x-0 bottom-0 flex flex-col justify-end gap-2 p-8 pb-12 sm:p-12 sm:pb-16">
           <span
-            className="display text-[10px] uppercase tracking-ultra"
+            className="text-eyebrow"
             style={{ color: clip.accent }}
           >
             Reel {String(index + 1).padStart(2, "0")}
           </span>
-          <h3 className="display mt-2 text-3xl text-flamingo-soft sm:text-5xl">
+          <h3 className="display mt-1 text-3xl text-flamingo-soft sm:text-5xl">
             {clip.title}
           </h3>
-          <p className="mt-3 max-w-xl text-sm text-flamingo-titanium sm:text-base">
+          <p className="mt-2 max-w-xl text-sm text-flamingo-titanium sm:text-base">
             {clip.caption}
           </p>
         </div>
+
+        {/* Frame counter — cinema-camera tag */}
+        <div className="text-meta absolute bottom-3 right-4 z-10 flex items-center gap-3 text-flamingo-titanium/70">
+          <span>FRAME {frameNo}</span>
+          <span aria-hidden className="h-1 w-1 rounded-full bg-flamingo-titanium/40" />
+          <span>REEL {String(index + 1).padStart(2, "0")}</span>
+        </div>
       </div>
     </motion.div>
+  );
+}
+
+function FilmstripBar({ position }: { position: "top" | "bottom" }) {
+  return (
+    <div
+      aria-hidden
+      className={`pointer-events-none absolute inset-x-0 z-[2] h-3 bg-flamingo-obsidian sm:h-4 ${
+        position === "top" ? "top-0" : "bottom-0"
+      }`}
+    >
+      <div className="flex h-full items-center justify-around px-2">
+        {Array.from({ length: 24 }).map((_, i) => (
+          <span
+            key={i}
+            className="h-1.5 w-2 rounded-[1px] bg-flamingo-soft/55 sm:h-2 sm:w-3"
+          />
+        ))}
+      </div>
+    </div>
   );
 }
 

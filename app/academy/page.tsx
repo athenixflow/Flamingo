@@ -24,11 +24,11 @@ export default function AcademyPage() {
       <section className="relative pb-12 pt-40 sm:pt-48">
         <Container>
           <ScrollReveal>
-            <span className="display flex items-center gap-3 text-xs tracking-ultra text-flamingo-pink">
-              <span aria-hidden className="h-px w-10 bg-flamingo-pink" />
+            <span className="text-eyebrow flex items-center gap-3">
+              <span aria-hidden className="h-px w-10 bg-flamingo-titanium/60" />
               Detailing Academy
             </span>
-            <h1 className="display mt-6 max-w-4xl text-5xl font-bold leading-[0.95] text-flamingo-soft sm:text-6xl lg:text-7xl">
+            <h1 className="text-mega mt-6 max-w-4xl text-flamingo-soft">
               The technique behind
               <br />
               <span className="text-gradient-pink">the chemistry.</span>

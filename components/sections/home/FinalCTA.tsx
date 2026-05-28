@@ -32,18 +32,15 @@ export function FinalCTA() {
 
       <Container className="relative text-center">
         <ScrollReveal>
-          <span className="display inline-flex items-center gap-3 text-xs tracking-ultra text-flamingo-pink">
-            <span className="h-px w-10 bg-flamingo-pink" />
+          <span className="text-eyebrow inline-flex items-center gap-3">
+            <span className="h-px w-10 bg-flamingo-titanium/60" />
             Built for Obsession
-            <span className="h-px w-10 bg-flamingo-pink" />
+            <span className="h-px w-10 bg-flamingo-titanium/60" />
           </span>
         </ScrollReveal>
 
         <ScrollReveal delay={0.1}>
-          <h2
-            id="final-heading"
-            className="display mt-6 text-5xl font-bold leading-[0.92] text-flamingo-soft sm:text-7xl md:text-8xl lg:text-[10rem]"
-          >
+          <h2 id="final-heading" className="text-mega mt-6 text-flamingo-soft">
             Built for
             <br />
             <span className="text-gradient-pink">Obsession.</span>

@@ -1,7 +1,7 @@
 "use client";
 
-import { motion, useInView } from "framer-motion";
-import { useRef } from "react";
+import { motion } from "framer-motion";
+import { useEffect, useState } from "react";
 import { useReducedMotion } from "@/lib/hooks/useReducedMotion";
 
 interface ScrollRevealProps {
@@ -12,6 +12,12 @@ interface ScrollRevealProps {
   once?: boolean;
 }
 
+/**
+ * Reveal-on-scroll wrapper. SSR-safe: server renders content fully visible.
+ * After mount, we transition to the "hidden" starting state and animate in
+ * via `whileInView`. This avoids the prior bug where 44+ elements shipped
+ * with `style="opacity:0"` and stayed invisible if JS failed.
+ */
 export function ScrollReveal({
   children,
   delay = 0,
@@ -19,22 +25,23 @@ export function ScrollReveal({
   className,
   once = true,
 }: ScrollRevealProps) {
-  const ref = useRef<HTMLDivElement>(null);
-  const inView = useInView(ref, { once, margin: "-10% 0px -10% 0px" });
   const reduced = useReducedMotion();
+  const [hydrated, setHydrated] = useState(false);
+
+  useEffect(() => {
+    if (!reduced) setHydrated(true);
+  }, [reduced]);
+
+  if (reduced || !hydrated) {
+    return <div className={className}>{children}</div>;
+  }
 
   return (
     <motion.div
-      ref={ref}
       className={className}
-      initial={reduced ? { opacity: 1, y: 0 } : { opacity: 0, y }}
-      animate={
-        reduced
-          ? { opacity: 1, y: 0 }
-          : inView
-            ? { opacity: 1, y: 0 }
-            : { opacity: 0, y }
-      }
+      initial={{ opacity: 0, y }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once, margin: "-10% 0px -10% 0px" }}
       transition={{
         duration: 0.9,
         delay,

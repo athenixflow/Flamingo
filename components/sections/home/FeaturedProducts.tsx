@@ -20,7 +20,8 @@ export function FeaturedProducts() {
           <div className="flex flex-col gap-6 sm:flex-row sm:items-end sm:justify-between">
             <SectionHeading
               eyebrow="Featured Catalog"
-              title="The chemistry that built the catalog."
+              title="The chemistry that"
+              accentTitle="built the catalog."
               description="Hero SKUs across our six discipline lines — drawn directly from the F-code catalog that ships to distributors in 15+ countries."
             />
             <Button href="/products" variant="outline" magnetic={false}>
@@ -29,15 +30,38 @@ export function FeaturedProducts() {
             </Button>
           </div>
         </ScrollReveal>
-
-        <div className="mt-14 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-          {products.map((p, index) => (
-            <ScrollReveal key={p.id} delay={index * 0.06}>
-              <ProductCard product={p} />
-            </ScrollReveal>
-          ))}
-        </div>
       </Container>
+
+      {/* Horizontal scroll-snap carousel — escapes the container for full-bleed scroll feel */}
+      <div className="relative mt-14">
+        <div className="mask-fade pointer-events-none absolute inset-y-0 left-0 z-10 w-12 bg-gradient-to-r from-flamingo-obsidian to-transparent sm:w-24" />
+        <div className="mask-fade pointer-events-none absolute inset-y-0 right-0 z-10 w-12 bg-gradient-to-l from-flamingo-obsidian to-transparent sm:w-24" />
+
+        <ul
+          className="flex snap-x snap-mandatory gap-5 overflow-x-auto px-[max(1rem,4vw)] pb-6 sm:gap-7 sm:px-[max(3rem,8vw)]"
+          style={{ scrollbarWidth: "none" }}
+          role="list"
+          aria-label="Featured products carousel"
+        >
+          {products.map((p) => (
+            <li
+              key={p.id}
+              className="w-[78vw] shrink-0 snap-start sm:w-[44vw] lg:w-[28vw] xl:w-[24rem]"
+            >
+              <ProductCard product={p} />
+            </li>
+          ))}
+          {/* End spacer so the last card snaps near center */}
+          <li
+            aria-hidden
+            className="w-[max(2rem,8vw)] shrink-0 snap-end"
+          />
+        </ul>
+
+        <Container className="mt-4 text-meta text-flamingo-titanium">
+          ← Drag or swipe to explore
+        </Container>
+      </div>
     </section>
   );
 }
@@ -48,20 +72,20 @@ function ProductCard({
   product: ReturnType<typeof getHeroProducts>[number];
 }) {
   return (
-    <Link href={`/products/${product.slug}`} className="group block">
-      <GlassCard className="relative h-full overflow-hidden p-8">
+    <Link href={`/products/${product.slug}`} className="group block h-full">
+      <GlassCard className="relative h-full overflow-hidden p-8 transition-transform duration-500 group-hover:-translate-y-1">
         <div
           aria-hidden
-          className="pointer-events-none absolute -right-20 -top-20 h-64 w-64 rounded-full opacity-50 blur-3xl transition-opacity duration-500 group-hover:opacity-90"
+          className="pointer-events-none absolute -right-20 -top-20 h-64 w-64 rounded-full opacity-30 blur-3xl transition-opacity duration-500 group-hover:opacity-60"
           style={{ background: product.heroColor }}
         />
 
         <div className="relative flex h-full flex-col gap-6">
           <div className="flex items-start justify-between gap-4">
-            <span className="display rounded-full bg-flamingo-obsidian/70 px-3 py-1 text-[10px] tracking-ultra text-flamingo-titanium">
+            <span className="text-meta rounded-full bg-flamingo-obsidian/70 px-3 py-1 text-flamingo-titanium">
               {product.id}
             </span>
-            <span className="display text-[10px] uppercase tracking-ultra text-flamingo-pink">
+            <span className="text-meta text-flamingo-titanium">
               {product.realCategory}
             </span>
           </div>
@@ -77,17 +101,17 @@ function ProductCard({
             <h3 className="display text-2xl font-bold text-flamingo-soft">
               {product.name}
             </h3>
-            <p className="text-sm text-flamingo-pink">{product.tagline}</p>
+            <p className="text-sm text-flamingo-cyan">{product.tagline}</p>
             <p className="line-clamp-3 text-sm text-flamingo-titanium">
               {product.shortBlurb}
             </p>
           </div>
 
           <div className="mt-auto flex items-center justify-between border-t border-flamingo-titanium/10 pt-4">
-            <span className="text-xs text-flamingo-titanium">
+            <span className="text-meta text-flamingo-titanium">
               {product.specs.volume}
             </span>
-            <span className="display inline-flex items-center gap-2 text-[10px] tracking-ultra text-flamingo-soft transition-colors group-hover:text-flamingo-pink">
+            <span className="text-meta inline-flex items-center gap-2 text-flamingo-soft transition-colors group-hover:text-flamingo-pink">
               Explore
               <Arrow />
             </span>

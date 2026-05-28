@@ -30,11 +30,11 @@ export default function TechnologyPage() {
 
         <Container className="relative">
           <ScrollReveal>
-            <span className="display flex items-center gap-3 text-xs tracking-ultra text-flamingo-pink">
-              <span aria-hidden className="h-px w-10 bg-flamingo-pink" />
+            <span className="text-eyebrow flex items-center gap-3" style={{ color: "rgb(255 165 90)" }}>
+              <span aria-hidden className="h-px w-10" style={{ background: "rgba(255,165,90,0.7)" }} />
               Engineering
             </span>
-            <h1 className="display mt-6 max-w-5xl text-5xl font-bold leading-[0.95] text-flamingo-soft sm:text-6xl lg:text-7xl">
+            <h1 className="text-mega mt-6 max-w-5xl text-flamingo-soft">
               We treat surfaces like
               <br />
               <span className="text-gradient-pink">
@@ -58,21 +58,23 @@ export default function TechnologyPage() {
               <ScrollReveal key={pillar.id}>
                 <GlassCard className="overflow-hidden">
                   <div
-                    className={`grid items-stretch lg:grid-cols-2 ${
-                      index % 2 === 1 ? "lg:[&>:first-child]:order-2" : ""
-                    }`}
+                    className={
+                      index % 2 === 1
+                        ? "flex flex-col lg:flex-row-reverse"
+                        : "flex flex-col lg:flex-row"
+                    }
                   >
-                    <div className="aspect-[16/10] lg:aspect-auto">
+                    <div className="aspect-[16/10] w-full lg:aspect-auto lg:w-1/2">
                       <TechViz type={pillar.vizType} accent={pillar.accent} />
                     </div>
-                    <div className="flex flex-col gap-6 p-10 lg:p-14">
+                    <div className="flex flex-col gap-6 p-10 lg:w-1/2 lg:p-14">
                       <span
-                        className="display text-[10px] tracking-ultra"
+                        className="text-eyebrow"
                         style={{ color: pillar.accent }}
                       >
-                        {pillar.name}
+                        Pillar 0{index + 1} · {pillar.name}
                       </span>
-                      <h2 className="display text-3xl text-flamingo-soft sm:text-4xl">
+                      <h2 className="text-display text-flamingo-soft">
                         {pillar.hero}
                       </h2>
                       <p className="text-sm text-flamingo-titanium md:text-base">
@@ -104,9 +106,9 @@ export default function TechnologyPage() {
           <ScrollReveal>
             <SectionHeading
               eyebrow="Build with us"
-              title="The same chemistry, under your brand."
+              title="The same chemistry,"
+              accentTitle="under your brand."
               description="Our OEM/ODM facility produces private-label chemistry for 60+ global automotive brands. The same engineering discipline applied to every contract."
-              accent
             />
             <div className="mt-10 flex flex-wrap gap-4">
               <Button href="/contact?type=oem">OEM / ODM Inquiry</Button>

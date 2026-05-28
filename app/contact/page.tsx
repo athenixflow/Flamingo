@@ -29,11 +29,11 @@ export default function ContactPage() {
 
         <Container className="relative">
           <ScrollReveal>
-            <span className="display flex items-center gap-3 text-xs tracking-ultra text-flamingo-pink">
-              <span aria-hidden className="h-px w-10 bg-flamingo-pink" />
+            <span className="text-eyebrow flex items-center gap-3">
+              <span aria-hidden className="h-px w-10 bg-flamingo-titanium/60" />
               Contact
             </span>
-            <h1 className="display mt-6 max-w-4xl text-5xl font-bold leading-[0.95] text-flamingo-soft sm:text-6xl lg:text-7xl">
+            <h1 className="text-mega mt-6 max-w-4xl text-flamingo-soft">
               Three doors in.
               <br />
               <span className="text-gradient-pink">One brand.</span>
@@ -47,24 +47,36 @@ export default function ContactPage() {
         </Container>
       </section>
 
-      <section className="py-20">
+      <section className="py-20" aria-labelledby="inquiry-form">
         <Container>
+          <div className="mb-10 flex flex-col gap-2">
+            <span className="text-eyebrow text-flamingo-titanium">
+              The Inquiry Form
+            </span>
+            <h2
+              id="inquiry-form"
+              className="display text-3xl text-flamingo-soft sm:text-4xl"
+            >
+              What brings you in?
+            </h2>
+          </div>
+
           <div className="grid gap-10 lg:grid-cols-[1.4fr_1fr]">
             <Suspense fallback={<div className="h-96 animate-pulse rounded-3xl bg-flamingo-carbon/40" />}>
               <ContactForm />
             </Suspense>
 
-            <div className="flex flex-col gap-4">
-              <span className="display text-[10px] tracking-ultra text-flamingo-pink">
+            <div className="flex flex-col gap-4" aria-labelledby="regional-offices">
+              <h2 id="regional-offices" className="text-eyebrow text-flamingo-titanium">
                 Regional Offices
-              </span>
+              </h2>
               {OFFICES.map((o) => (
                 <GlassCard key={`${o.region}-${o.city}`} className="p-6">
                   <h3 className="display text-sm text-flamingo-soft">
                     {o.region}
                   </h3>
-                  <p className="mt-1 text-flamingo-pink">{o.city}</p>
-                  <p className="mt-3 text-xs uppercase tracking-ultra text-flamingo-titanium">
+                  <p className="mt-1 text-flamingo-cyan">{o.city}</p>
+                  <p className="text-meta mt-3 text-flamingo-titanium">
                     {o.role}
                   </p>
                   {o.email && (

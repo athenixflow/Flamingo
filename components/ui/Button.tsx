@@ -60,7 +60,7 @@ const Inner = forwardRef<HTMLElement, Omit<Props, "magnetic">>(function Inner(
       </span>
       <span
         aria-hidden
-        className="absolute inset-0 -translate-x-full bg-gradient-to-r from-transparent via-white/20 to-transparent transition-transform duration-700 group-hover:translate-x-full"
+        className="absolute inset-0 -translate-x-full bg-gradient-to-r from-transparent via-white/20 to-transparent transition-transform duration-1000 group-hover:translate-x-full"
       />
     </>
   );

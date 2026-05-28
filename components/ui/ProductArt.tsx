@@ -50,7 +50,7 @@ export function ProductArt({
       ) : (
         <BottleFallback color={heroColor} />
       )}
-      <div className="absolute inset-x-0 bottom-0 h-px bg-gradient-to-r from-transparent via-flamingo-pink/40 to-transparent" />
+      <div className="absolute inset-x-0 bottom-0 h-px bg-gradient-to-r from-transparent via-flamingo-titanium/30 to-transparent" />
     </div>
   );
 }

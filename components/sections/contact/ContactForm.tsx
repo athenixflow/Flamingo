@@ -60,7 +60,7 @@ export function ContactForm() {
 
   return (
     <GlassCard className="p-8 sm:p-10">
-      <span className="display text-[10px] tracking-ultra text-flamingo-pink">
+      <span className="text-eyebrow text-flamingo-titanium">
         Inquiry Type
       </span>
       <div className="mt-4 grid gap-2 sm:grid-cols-3">

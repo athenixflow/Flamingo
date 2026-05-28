@@ -17,7 +17,7 @@ function HeroFallback() {
     <div className="absolute inset-0 grid-noise opacity-40">
       <div
         aria-hidden
-        className="pointer-events-none absolute inset-0 bg-gradient-radial from-flamingo-pink/20 via-transparent to-transparent"
+        className="pointer-events-none absolute inset-0 bg-gradient-radial from-flamingo-titanium/10 via-transparent to-transparent"
       />
     </div>
   );
@@ -49,9 +49,9 @@ export function Hero() {
           initial={{ y: 24, opacity: 0 }}
           animate={{ y: 0, opacity: 1 }}
           transition={{ delay: 0.4, duration: 1, ease: [0.16, 1, 0.3, 1] }}
-          className="display mb-5 flex items-center gap-3 text-[10px] tracking-ultra text-flamingo-pink"
+          className="text-eyebrow mb-5 flex items-center gap-3"
         >
-          <span aria-hidden className="h-px w-10 bg-flamingo-pink" />
+          <span aria-hidden className="h-px w-10 bg-flamingo-titanium/60" />
           Engineered in USA · Nothing But The Best
         </motion.div>
 
@@ -60,7 +60,7 @@ export function Hero() {
           initial={{ y: 60, opacity: 0 }}
           animate={{ y: 0, opacity: 1 }}
           transition={{ delay: 0.5, duration: 1.2, ease: [0.16, 1, 0.3, 1] }}
-          className="display max-w-4xl text-5xl font-bold leading-[0.92] text-flamingo-soft sm:text-6xl md:text-7xl lg:text-[8rem]"
+          className="text-mega max-w-5xl text-flamingo-soft"
         >
           Protect
           <br />
@@ -99,15 +99,45 @@ export function Hero() {
           transition={{ delay: 1.5, duration: 1 }}
           className="absolute bottom-8 right-6 hidden items-center gap-3 sm:flex"
         >
-          <span className="display text-[10px] tracking-ultra text-flamingo-titanium">
+          <span className="text-meta text-flamingo-titanium">
             Scroll to transform
           </span>
           <span aria-hidden className="relative inline-flex h-10 w-px overflow-hidden bg-flamingo-titanium/30">
-            <span className="absolute inset-x-0 top-0 h-1/2 animate-pulse bg-flamingo-pink" />
+            <span className="absolute inset-x-0 top-0 h-1/2 animate-pulse bg-flamingo-titanium" />
           </span>
         </motion.div>
       </Container>
+
+      {/* Marquee ticker — signature cinematic motion at the foot of the hero */}
+      <div className="pointer-events-none absolute inset-x-0 bottom-0 z-10 overflow-hidden border-t border-flamingo-titanium/10 bg-flamingo-obsidian/40 py-3 backdrop-blur">
+        <div className="flex animate-marquee whitespace-nowrap">
+          <TickerStrip />
+          <TickerStrip />
+        </div>
+      </div>
     </section>
+  );
+}
+
+function TickerStrip() {
+  const items = [
+    "Engineered in USA",
+    "Nothing But The Best",
+    "Protect The Machine",
+    "Nano Ceramic · 9H",
+    "Polymer Tire Tech",
+    "OEM / ODM Manufacturing",
+    "15+ Countries",
+  ];
+  return (
+    <ul className="flex shrink-0 items-center gap-12 px-6 text-meta text-flamingo-titanium">
+      {items.map((it) => (
+        <li key={it} className="flex items-center gap-12">
+          <span>{it}</span>
+          <span aria-hidden className="h-1 w-1 rounded-full bg-flamingo-titanium/40" />
+        </li>
+      ))}
+    </ul>
   );
 }
 

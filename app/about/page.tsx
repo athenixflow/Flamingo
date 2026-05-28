@@ -36,11 +36,11 @@ export default function AboutPage() {
 
         <Container className="relative">
           <ScrollReveal>
-            <span className="display flex items-center gap-3 text-xs tracking-ultra text-flamingo-pink">
-              <span aria-hidden className="h-px w-10 bg-flamingo-pink" />
+            <span className="text-eyebrow flex items-center gap-3">
+              <span aria-hidden className="h-px w-10 bg-flamingo-titanium/60" />
               {ABOUT_HERO.eyebrow}
             </span>
-            <h1 className="display mt-6 max-w-5xl text-5xl font-bold leading-[0.95] text-flamingo-soft sm:text-6xl lg:text-7xl">
+            <h1 className="text-mega mt-6 max-w-5xl text-flamingo-soft">
               {ABOUT_HERO.headline}
             </h1>
             <p className="mt-6 max-w-3xl text-base text-flamingo-titanium md:text-lg">
@@ -56,8 +56,8 @@ export default function AboutPage() {
             {STATS_LIST.map((s, i) => (
               <ScrollReveal key={s.label} delay={i * 0.05}>
                 <GlassCard className="p-8">
-                  <div className="display text-5xl text-flamingo-pink">{s.value}</div>
-                  <div className="mt-2 display text-xs uppercase tracking-ultra text-flamingo-soft">
+                  <div className="display text-5xl text-gradient-pink">{s.value}</div>
+                  <div className="text-meta mt-3 text-flamingo-soft">
                     {s.label}
                   </div>
                   {s.hint && (
@@ -85,7 +85,10 @@ export default function AboutPage() {
             {PHILOSOPHY.map((p, i) => (
               <ScrollReveal key={p.title} delay={i * 0.08}>
                 <GlassCard className="h-full p-8">
-                  <h3 className="display text-xl text-flamingo-pink">
+                  <span className="text-eyebrow mb-3 block text-flamingo-titanium">
+                    Pillar {String(i + 1).padStart(2, "0")}
+                  </span>
+                  <h3 className="display text-xl text-flamingo-soft">
                     {p.title}
                   </h3>
                   <p className="mt-4 text-sm text-flamingo-titanium md:text-base">
@@ -101,11 +104,11 @@ export default function AboutPage() {
       <section className="py-24" aria-labelledby="mission">
         <Container>
           <ScrollReveal>
-            <div className="rounded-3xl border border-flamingo-pink/20 bg-flamingo-pink/[0.04] p-12 text-center sm:p-20">
-              <span className="display text-[10px] tracking-ultra text-flamingo-pink">
+            <div className="rounded-3xl border border-flamingo-titanium/15 bg-flamingo-carbon/40 p-12 text-center sm:p-20">
+              <span className="text-eyebrow text-flamingo-titanium">
                 Our Mission
               </span>
-              <h2 className="display mt-6 text-3xl text-flamingo-soft sm:text-5xl">
+              <h2 className="text-display mt-6 text-flamingo-soft">
                 {MISSION.title}
               </h2>
               <p className="mx-auto mt-6 max-w-3xl text-base text-flamingo-titanium md:text-lg">
@@ -121,9 +124,9 @@ export default function AboutPage() {
           <ScrollReveal>
             <SectionHeading
               eyebrow="Manufacturing"
-              title="Vertically integrated. OEM ready."
+              title="Vertically integrated."
+              accentTitle="OEM ready."
               description="The facility behind the catalog — and behind 60+ private-label brands worldwide."
-              accent
             />
           </ScrollReveal>
 
@@ -131,7 +134,7 @@ export default function AboutPage() {
             {MANUFACTURING.map((m, i) => (
               <ScrollReveal key={m.title} delay={i * 0.08}>
                 <GlassCard className="h-full p-8">
-                  <span className="display text-[10px] tracking-ultra text-flamingo-pink">
+                  <span className="text-eyebrow text-flamingo-titanium">
                     {String(i + 1).padStart(2, "0")}
                   </span>
                   <h3 className="display mt-4 text-2xl text-flamingo-soft">

@@ -44,7 +44,7 @@ export function Hero() {
       <div className="absolute inset-x-0 bottom-0 top-0 bg-gradient-to-b from-flamingo-obsidian/30 via-transparent to-flamingo-obsidian" />
       <div className="absolute inset-0 bg-gradient-to-r from-flamingo-obsidian/85 via-flamingo-obsidian/30 to-transparent" />
 
-      <Container className="relative flex h-full flex-col justify-end pb-20 sm:pb-28">
+      <Container className="relative flex h-full flex-col justify-end pb-24 pt-28 sm:pb-28 sm:pt-32">
         <motion.div
           initial={{ y: 24, opacity: 0 }}
           animate={{ y: 0, opacity: 1 }}

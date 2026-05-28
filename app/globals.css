@@ -169,9 +169,9 @@
   /* MEGA TIER — reserved for hero moments only (1 per page max). */
   .text-mega {
     font-family: var(--font-display), ui-sans-serif, system-ui, sans-serif;
-    font-size: clamp(2.5rem, 11vw, 11rem);
+    font-size: clamp(2.25rem, 8.5vw, 8.5rem);
     font-weight: 700;
-    line-height: 0.88;
+    line-height: 0.9;
     letter-spacing: -0.035em;
     word-spacing: 0.04em;
     text-transform: uppercase;

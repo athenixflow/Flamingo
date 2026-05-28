@@ -29,7 +29,7 @@ export function Hero() {
   return (
     <section
       aria-labelledby="hero-heading"
-      className="relative h-[100svh] min-h-[640px] w-full overflow-hidden"
+      className="relative min-h-[100svh] w-full overflow-hidden"
     >
       <div className="absolute inset-0">
         {reduced ? (
@@ -44,7 +44,7 @@ export function Hero() {
       <div className="absolute inset-x-0 bottom-0 top-0 bg-gradient-to-b from-flamingo-obsidian/30 via-transparent to-flamingo-obsidian" />
       <div className="absolute inset-0 bg-gradient-to-r from-flamingo-obsidian/85 via-flamingo-obsidian/30 to-transparent" />
 
-      <Container className="relative flex h-full flex-col justify-end pb-24 pt-28 sm:pb-28 sm:pt-32">
+      <Container className="relative flex min-h-[100svh] flex-col justify-end pb-32 pt-44 sm:pb-36 sm:pt-52">
         <motion.div
           initial={{ y: 24, opacity: 0 }}
           animate={{ y: 0, opacity: 1 }}

@@ -42,7 +42,7 @@ export function ProductHero({ product, category, realImageSrc }: ProductHeroProp
               {" / "}
             </>
           )}
-          <span className="text-flamingo-soft">{product.id}</span>
+          <span className="text-flamingo-soft">{product.code ?? product.name}</span>
         </nav>
 
         <div className="mt-8 grid items-center gap-12 lg:grid-cols-[1.1fr_1fr]">
@@ -54,7 +54,7 @@ export function ProductHero({ product, category, realImageSrc }: ProductHeroProp
               className="text-meta inline-flex w-fit items-center gap-3 rounded-full border border-flamingo-titanium/30 px-4 py-1.5 text-flamingo-titanium"
             >
               <span className="h-1 w-1 rounded-full bg-flamingo-cyan" />
-              {product.id} · {product.realCategory}
+              {product.code ? `${product.code} · ${product.realCategory}` : product.realCategory}
             </motion.span>
 
             <motion.h1
@@ -96,20 +96,22 @@ export function ProductHero({ product, category, realImageSrc }: ProductHeroProp
               </Button>
             </motion.div>
 
-            <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ delay: 0.5 }}
-              className="mt-4 flex items-center gap-4 border-t border-flamingo-titanium/10 pt-4 text-xs uppercase tracking-ultra text-flamingo-titanium"
-            >
-              <span>{product.specs.volume}</span>
-              {product.specs.volumePerCarton && (
-                <>
+            {(product.specs.volume || product.specs.volumePerCarton) && (
+              <motion.div
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ delay: 0.5 }}
+                className="mt-4 flex items-center gap-4 border-t border-flamingo-titanium/10 pt-4 text-xs uppercase tracking-ultra text-flamingo-titanium"
+              >
+                {product.specs.volume && <span>{product.specs.volume}</span>}
+                {product.specs.volume && product.specs.volumePerCarton && (
                   <span aria-hidden>·</span>
+                )}
+                {product.specs.volumePerCarton && (
                   <span>{product.specs.volumePerCarton}</span>
-                </>
-              )}
-            </motion.div>
+                )}
+              </motion.div>
+            )}
           </div>
 
           <div
@@ -135,7 +137,7 @@ export function ProductHero({ product, category, realImageSrc }: ProductHeroProp
                 >
                   <Image
                     src={realImageSrc}
-                    alt={`${product.name} — ${product.id}`}
+                    alt={`${product.name}${product.code ? ` — ${product.code}` : ""}`}
                     fill
                     sizes="(max-width: 1024px) 90vw, 560px"
                     className="object-contain p-8"
@@ -144,7 +146,7 @@ export function ProductHero({ product, category, realImageSrc }: ProductHeroProp
                 </motion.div>
                 <div className="absolute bottom-4 left-4 right-4 flex items-center justify-between text-[10px] uppercase tracking-ultra text-flamingo-titanium">
                   <span>Live catalog photo</span>
-                  <span>{product.id}</span>
+                  <span>{product.code ?? product.realCategory}</span>
                 </div>
               </>
             ) : (
@@ -160,7 +162,7 @@ export function ProductHero({ product, category, realImageSrc }: ProductHeroProp
                     >
                       <div className="grid-noise absolute inset-0 opacity-30" />
                       <span className="display absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 text-2xl tracking-ultra text-flamingo-soft">
-                        {product.id}
+                        {product.code ?? product.name}
                       </span>
                     </div>
                   }
@@ -169,7 +171,7 @@ export function ProductHero({ product, category, realImageSrc }: ProductHeroProp
                 </ClientErrorBoundary>
                 <div className="absolute bottom-4 left-4 right-4 flex items-center justify-between text-[10px] uppercase tracking-ultra text-flamingo-titanium">
                   <span>Drag to rotate</span>
-                  <span>{product.id}</span>
+                  <span>{product.code ?? product.realCategory}</span>
                 </div>
               </>
             )}

@@ -24,7 +24,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   const product = getProduct(slug);
   if (!product) return buildMetadata({ title: "Product not found" });
   return buildMetadata({
-    title: `${product.name} · ${product.id}`,
+    title: product.code ? `${product.name} · ${product.code}` : product.name,
     description: product.shortBlurb,
     path: `/products/${product.slug}`,
   });
@@ -37,13 +37,13 @@ export default async function ProductDetailPage({ params }: PageProps) {
 
   const category = getCategory(product.category);
   const related = getRelatedProducts(product);
-  const realImage = getProductImage(product.id);
+  const realImage = getProductImage(product.slug);
 
   const jsonLd = {
     "@context": "https://schema.org",
     "@type": "Product",
     name: product.name,
-    sku: product.id,
+    sku: product.code ?? product.slug,
     category: product.realCategory,
     description: product.longCopy,
     brand: { "@type": "Brand", name: "Flamingo Car Care" },

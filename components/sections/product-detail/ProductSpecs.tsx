@@ -4,11 +4,9 @@ import { GlassCard } from "@/components/ui/GlassCard";
 import type { Product } from "@/content/products";
 
 export function ProductSpecs({ product }: { product: Product }) {
-  const rows: [string, string][] = [
-    ["Product Code", product.id],
-    ["Category", product.realCategory],
-    ["Volume", product.specs.volume],
-  ];
+  const rows: [string, string][] = [["Category", product.realCategory]];
+  if (product.code) rows.unshift(["Product Code", product.code]);
+  if (product.specs.volume) rows.push(["Volume", product.specs.volume]);
   if (product.specs.volumePerCarton) {
     rows.push(["Volume per carton", product.specs.volumePerCarton]);
   }

@@ -13,6 +13,11 @@ export function UsageGuide({ product }: { product: Product }) {
     offset: ["start end", "end start"],
   });
 
+  // Source catalog doesn't always document application steps. Hide the
+  // whole section when there's nothing to render — including the cautions
+  // panel, since cautions without steps look orphaned.
+  if (product.application.length === 0) return null;
+
   return (
     <section id="usage" className="py-24" aria-labelledby="usage-heading">
       <Container>

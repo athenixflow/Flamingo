@@ -82,16 +82,20 @@ function ProductCard({
 
         <div className="relative flex h-full flex-col gap-6">
           <div className="flex items-start justify-between gap-4">
-            <span className="text-meta rounded-full bg-flamingo-obsidian/70 px-3 py-1 text-flamingo-titanium">
-              {product.id}
-            </span>
+            {product.code ? (
+              <span className="text-meta rounded-full bg-flamingo-obsidian/70 px-3 py-1 text-flamingo-titanium">
+                {product.code}
+              </span>
+            ) : (
+              <span aria-hidden />
+            )}
             <span className="text-meta text-flamingo-titanium">
               {product.realCategory}
             </span>
           </div>
 
           <ProductArt
-            productId={product.id}
+            productSlug={product.slug}
             productName={product.name}
             heroColor={product.heroColor}
             className="aspect-square w-full"
@@ -109,7 +113,7 @@ function ProductCard({
 
           <div className="mt-auto flex items-center justify-between border-t border-flamingo-titanium/10 pt-4">
             <span className="text-meta text-flamingo-titanium">
-              {product.specs.volume}
+              {product.specs.volume || product.realCategory}
             </span>
             <span className="text-meta inline-flex items-center gap-2 text-flamingo-soft transition-colors group-hover:text-flamingo-pink">
               Explore

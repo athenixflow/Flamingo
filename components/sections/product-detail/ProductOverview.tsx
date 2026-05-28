@@ -18,21 +18,23 @@ export function ProductOverview({ product }: { product: Product }) {
             </p>
           </div>
 
-          <GlassCard className="h-fit p-8">
-            <h3 className="text-eyebrow text-flamingo-titanium">
-              Key features
-            </h3>
-            <ul className="mt-5 flex flex-col gap-4">
-              {product.features.map((f, i) => (
-                <li key={f} className="flex items-start gap-3 text-sm text-flamingo-soft">
-                  <span className="text-meta mt-0.5 inline-flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-flamingo-titanium/15 text-flamingo-titanium">
-                    {String(i + 1).padStart(2, "0")}
-                  </span>
-                  {f}
-                </li>
-              ))}
-            </ul>
-          </GlassCard>
+          {product.features.length > 0 && (
+            <GlassCard className="h-fit p-8">
+              <h3 className="text-eyebrow text-flamingo-titanium">
+                Key features
+              </h3>
+              <ul className="mt-5 flex flex-col gap-4">
+                {product.features.map((f, i) => (
+                  <li key={f} className="flex items-start gap-3 text-sm text-flamingo-soft">
+                    <span className="text-meta mt-0.5 inline-flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-flamingo-titanium/15 text-flamingo-titanium">
+                      {String(i + 1).padStart(2, "0")}
+                    </span>
+                    {f}
+                  </li>
+                ))}
+              </ul>
+            </GlassCard>
+          )}
         </div>
       </Container>
     </section>

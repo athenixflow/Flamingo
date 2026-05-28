@@ -132,16 +132,20 @@ function CatalogCard({
       <GlassCard className="h-full overflow-hidden p-6">
         <div className="flex h-full flex-col gap-5">
           <div className="flex items-center justify-between">
-            <span className="text-meta rounded-full bg-flamingo-obsidian/70 px-3 py-1 text-flamingo-titanium">
-              {product.id}
-            </span>
+            {product.code ? (
+              <span className="text-meta rounded-full bg-flamingo-obsidian/70 px-3 py-1 text-flamingo-titanium">
+                {product.code}
+              </span>
+            ) : (
+              <span aria-hidden />
+            )}
             <span className="text-meta text-flamingo-titanium">
               {product.realCategory}
             </span>
           </div>
 
           <ProductArt
-            productId={product.id}
+            productSlug={product.slug}
             productName={product.name}
             heroColor={product.heroColor}
             className="aspect-[4/3] w-full"
@@ -159,7 +163,9 @@ function CatalogCard({
           </p>
 
           <div className="mt-auto flex items-center justify-between border-t border-flamingo-titanium/10 pt-3">
-            <span className="text-meta text-flamingo-titanium">{product.specs.volume}</span>
+            <span className="text-meta text-flamingo-titanium">
+              {product.specs.volume || product.realCategory}
+            </span>
             <span className="text-meta inline-flex items-center gap-1 text-flamingo-soft transition-colors group-hover:text-flamingo-pink">
               View detail →
             </span>

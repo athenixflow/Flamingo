@@ -1,10 +1,6 @@
 import { Hero } from "@/components/sections/home/Hero";
 import { EngineeringReveal } from "@/components/sections/home/EngineeringReveal";
 import { FeaturedProducts } from "@/components/sections/home/FeaturedProducts";
-import { TechShowcase } from "@/components/sections/home/TechShowcase";
-import { DetailingCinematics } from "@/components/sections/home/DetailingCinematics";
-import { GlobalPresence } from "@/components/sections/home/GlobalPresence";
-import { SocialProof } from "@/components/sections/home/SocialProof";
 import { FinalCTA } from "@/components/sections/home/FinalCTA";
 import { LoaderOverlay } from "@/components/sections/home/LoaderOverlay";
 import { SITE } from "@/lib/seo";
@@ -34,10 +30,6 @@ export default function HomePage() {
       <Hero />
       <EngineeringReveal />
       <FeaturedProducts />
-      <TechShowcase />
-      <DetailingCinematics />
-      <GlobalPresence />
-      <SocialProof />
       <FinalCTA />
     </>
   );

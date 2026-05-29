@@ -4,6 +4,7 @@ import { Container } from "@/components/ui/Container";
 import { ScrollReveal } from "@/components/motion/ScrollReveal";
 import { GlassCard } from "@/components/ui/GlassCard";
 import { ContactForm } from "@/components/sections/contact/ContactForm";
+import { GlobalPresence } from "@/components/sections/contact/GlobalPresence";
 import { OFFICES } from "@/content/contact";
 import { buildMetadata } from "@/lib/seo";
 
@@ -93,6 +94,8 @@ export default function ContactPage() {
           </div>
         </Container>
       </section>
+
+      <GlobalPresence />
     </>
   );
 }

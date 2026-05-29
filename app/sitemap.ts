@@ -1,9 +1,8 @@
 import type { MetadataRoute } from "next";
 import { PRODUCTS } from "@/content/products";
-import { ACADEMY_LESSONS } from "@/content/academy";
 import { SITE } from "@/lib/seo";
 
-const STATIC_PATHS = ["", "products", "technology", "about", "academy", "media", "contact"];
+const STATIC_PATHS = ["", "products", "about", "contact"];
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const now = new Date();
@@ -20,12 +19,6 @@ export default function sitemap(): MetadataRoute.Sitemap {
       lastModified: now,
       changeFrequency: "monthly" as const,
       priority: 0.7,
-    })),
-    ...ACADEMY_LESSONS.map((l) => ({
-      url: `${SITE.url}/academy/${l.slug}`,
-      lastModified: now,
-      changeFrequency: "monthly" as const,
-      priority: 0.6,
     })),
   ];
 }

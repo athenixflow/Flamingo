@@ -118,9 +118,6 @@ export function Hero() {
             Explore Products
             <Arrow />
           </Button>
-          <Button href="/media" size="lg" variant="ghost">
-            Watch the Experience
-          </Button>
         </motion.div>
 
         <motion.div

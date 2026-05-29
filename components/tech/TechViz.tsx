@@ -1,7 +1,8 @@
 "use client";
 
 import { motion } from "framer-motion";
-import type { TechVizType } from "@/content/technology";
+
+export type TechVizType = "molecular" | "hydrophobic" | "layered" | "uv";
 
 interface TechVizProps {
   type: TechVizType;

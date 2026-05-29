@@ -43,7 +43,7 @@ export function ProductCatalog() {
     <section className="pb-32" aria-labelledby="catalog">
       <Container>
         <div id="catalog" className="sticky top-24 z-20 -mx-3 mb-10 flex justify-center">
-          <div className="glass-strong inline-flex max-w-full items-center gap-1 overflow-x-auto rounded-full px-2 py-2">
+          <div className="glass-strong no-scrollbar no-swipe-back inline-flex max-w-full items-center gap-1 overflow-x-auto rounded-full px-2 py-2">
             <LayoutGroup>
               {FILTERS.map((f) => {
                 const active = filter === f.id;
@@ -53,7 +53,7 @@ export function ProductCatalog() {
                     type="button"
                     onClick={() => setFilter(f.id)}
                     className={cn(
-                      "text-meta relative shrink-0 rounded-full px-4 py-2 transition-colors no-tap-highlight",
+                      "text-meta no-tap-highlight relative shrink-0 rounded-full px-4 py-3 transition-colors sm:py-2",
                       active
                         ? "text-white"
                         : "text-flamingo-titanium hover:text-flamingo-soft",

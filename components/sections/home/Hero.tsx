@@ -1,5 +1,6 @@
 "use client";
 
+import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import { Button } from "@/components/ui/Button";
 import { Container } from "@/components/ui/Container";
@@ -16,7 +17,7 @@ function HeroFallback() {
   );
 }
 
-function HeroVideo() {
+function HeroVideo({ preload }: { preload: "auto" | "metadata" }) {
   return (
     <video
       className="h-full w-full object-cover"
@@ -24,7 +25,7 @@ function HeroVideo() {
       muted
       loop
       playsInline
-      preload="auto"
+      preload={preload}
       poster="/images/products/9h-nano-ceramic-coating.jpg"
       aria-hidden
       style={{ filter: "brightness(0.55) contrast(1.08) saturate(1.05)" }}
@@ -36,6 +37,14 @@ function HeroVideo() {
 
 export function Hero() {
   const reduced = useReducedMotion();
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    const check = () => setIsMobile(window.innerWidth < 768);
+    check();
+    window.addEventListener("resize", check);
+    return () => window.removeEventListener("resize", check);
+  }, []);
 
   return (
     <section
@@ -52,7 +61,7 @@ export function Hero() {
             "radial-gradient(ellipse 78% 70% at 50% 50%, #000 45%, rgba(0,0,0,0.55) 75%, transparent 100%)",
         }}
       >
-        {reduced ? <HeroFallback /> : <HeroVideo />}
+        {reduced ? <HeroFallback /> : <HeroVideo preload={isMobile ? "metadata" : "auto"} />}
       </div>
 
       {/* Inward vignette — soft center contrast lift + hard edge fade to obsidian */}
@@ -78,11 +87,11 @@ export function Hero() {
           initial={{ y: 24, opacity: 0 }}
           animate={{ y: 0, opacity: 1 }}
           transition={{ delay: 0.4, duration: 1, ease: [0.16, 1, 0.3, 1] }}
-          className="text-eyebrow mb-6 flex items-center justify-center gap-3"
+          className="text-eyebrow mb-6 flex max-w-full flex-wrap items-center justify-center gap-x-3 gap-y-2"
         >
-          <span aria-hidden className="h-px w-10 bg-flamingo-titanium/60" />
-          Engineered in USA · Nothing But The Best
-          <span aria-hidden className="h-px w-10 bg-flamingo-titanium/60" />
+          <span aria-hidden className="hidden h-px w-10 bg-flamingo-titanium/60 sm:block" />
+          <span className="text-center">Engineered in USA · Nothing But The Best</span>
+          <span aria-hidden className="hidden h-px w-10 bg-flamingo-titanium/60 sm:block" />
         </motion.div>
 
         <motion.h1

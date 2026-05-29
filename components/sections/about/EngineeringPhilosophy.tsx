@@ -1,12 +1,19 @@
 "use client";
 
-import { useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import { motion, useScroll, useTransform, type MotionValue } from "framer-motion";
 import { Container } from "@/components/ui/Container";
 import { PHILOSOPHY_INTRO, PHILOSOPHY_FORCES } from "@/content/about";
 
 export function EngineeringPhilosophy() {
   const ref = useRef<HTMLElement>(null);
+  const [isMobile, setIsMobile] = useState(false);
+  useEffect(() => {
+    const check = () => setIsMobile(window.innerWidth < 768);
+    check();
+    window.addEventListener("resize", check);
+    return () => window.removeEventListener("resize", check);
+  }, []);
   const { scrollYProgress } = useScroll({
     target: ref,
     offset: ["start start", "end end"],
@@ -30,7 +37,7 @@ export function EngineeringPhilosophy() {
       ref={ref}
       aria-labelledby="philosophy-heading"
       className="relative w-full bg-flamingo-obsidian"
-      style={{ minHeight: "260vh" }}
+      style={{ minHeight: isMobile ? "200vh" : "260vh" }}
     >
       <div className="sticky top-0 flex h-screen w-full flex-col overflow-hidden">
         <div
@@ -69,8 +76,25 @@ export function EngineeringPhilosophy() {
               brakesY={brakesY}
               engineX={engineX}
             />
-            {/* Floating force labels appear around the layers */}
+            {/* Floating force labels appear around the layers — desktop only */}
             <ForceLabels opacity={labelOpacity} />
+          </div>
+
+          {/* Mobile-only force grid (the desktop floating chips don't fit
+              a portrait viewport, but we still want users to see the
+              five forces the chemistry fights). */}
+          <div className="-mx-3 grid grid-cols-2 gap-2 sm:hidden">
+            {PHILOSOPHY_FORCES.map((f) => (
+              <div
+                key={f.label}
+                className="glass rounded-2xl px-3 py-2.5"
+              >
+                <div className="text-meta text-flamingo-pink">{f.label}</div>
+                <div className="mt-1 text-[10.5px] leading-snug text-flamingo-titanium">
+                  {f.blurb}
+                </div>
+              </div>
+            ))}
           </div>
         </Container>
       </div>

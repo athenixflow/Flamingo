@@ -1,12 +1,19 @@
 "use client";
 
-import { useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import { motion, useScroll, useTransform, type MotionValue } from "framer-motion";
 import { Container } from "@/components/ui/Container";
 import { LEGACY_INTRO, LEGACY_TIMELINE, type LegacyEra } from "@/content/about";
 
 export function LegacyTimeline() {
   const ref = useRef<HTMLElement>(null);
+  const [isMobile, setIsMobile] = useState(false);
+  useEffect(() => {
+    const check = () => setIsMobile(window.innerWidth < 768);
+    check();
+    window.addEventListener("resize", check);
+    return () => window.removeEventListener("resize", check);
+  }, []);
   const { scrollYProgress } = useScroll({
     target: ref,
     offset: ["start start", "end end"],
@@ -32,7 +39,7 @@ export function LegacyTimeline() {
       id="legacy"
       aria-labelledby="legacy-heading"
       className="relative w-full bg-flamingo-obsidian"
-      style={{ minHeight: "320vh" }}
+      style={{ minHeight: isMobile ? "240vh" : "320vh" }}
     >
       <div className="sticky top-0 flex h-screen w-full flex-col overflow-hidden">
         {/* Color-shift background */}

@@ -223,6 +223,7 @@
 
   .no-tap-highlight {
     -webkit-tap-highlight-color: transparent;
+    touch-action: manipulation;
   }
 
   /* Hide scrollbar on carousels while keeping native swipe/drag */
@@ -231,6 +232,20 @@
   }
   .no-scrollbar::-webkit-scrollbar {
     display: none;
+  }
+
+  /* Prevent iOS Safari from double-tap-zooming on small interactive
+     chips; default tap behavior remains for text content. */
+  button,
+  a,
+  [role="button"] {
+    touch-action: manipulation;
+  }
+
+  /* Prevent horizontal momentum drag from triggering router back gesture
+     on iOS during horizontal carousels. */
+  .no-swipe-back {
+    overscroll-behavior-x: contain;
   }
 }
 

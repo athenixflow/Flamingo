@@ -1,5 +1,6 @@
 "use client";
 
+import { useEffect, useState } from "react";
 import Image from "next/image";
 import { motion } from "framer-motion";
 import { Container } from "@/components/ui/Container";
@@ -7,12 +8,19 @@ import { Button } from "@/components/ui/Button";
 import { MANIFESTO } from "@/content/about";
 
 export function BrandManifesto({ logoSrc }: { logoSrc?: string | null }) {
+  const [isMobile, setIsMobile] = useState(false);
+  useEffect(() => {
+    const check = () => setIsMobile(window.innerWidth < 768);
+    check();
+    window.addEventListener("resize", check);
+    return () => window.removeEventListener("resize", check);
+  }, []);
   return (
     <section
       aria-labelledby="manifesto-heading"
       className="relative min-h-[100svh] w-full overflow-hidden bg-flamingo-obsidian"
     >
-      <Particles />
+      <Particles count={isMobile ? 8 : 16} />
 
       <div
         aria-hidden
@@ -118,10 +126,10 @@ function LogoReveal({ logoSrc }: { logoSrc?: string | null }) {
   );
 }
 
-function Particles() {
+function Particles({ count = 16 }: { count?: number }) {
   return (
     <div aria-hidden className="pointer-events-none absolute inset-0 overflow-hidden">
-      {Array.from({ length: 16 }).map((_, i) => {
+      {Array.from({ length: count }).map((_, i) => {
         const left = (i * 41) % 100;
         const top = ((i * 73) % 90) + 5;
         const delay = (i % 6) * 1.6;

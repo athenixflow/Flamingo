@@ -97,7 +97,7 @@ function OrbitStage({
               >
                 <span
                   aria-hidden
-                  className="inline-flex h-14 w-14 items-center justify-center rounded-full border bg-flamingo-carbon/80 backdrop-blur"
+                  className="inline-flex h-12 w-12 items-center justify-center rounded-full border bg-flamingo-carbon/80 backdrop-blur sm:h-14 sm:w-14"
                   style={{
                     borderColor: category?.accentColor ?? "#E50982",
                     boxShadow: isActive
@@ -108,7 +108,7 @@ function OrbitStage({
                   <NodeGlyph id={node.id} color={category?.accentColor ?? "#E50982"} />
                 </span>
                 <span
-                  className="text-meta whitespace-nowrap rounded-full bg-flamingo-obsidian/60 px-3 py-1"
+                  className="text-meta whitespace-nowrap rounded-full bg-flamingo-obsidian/60 px-2 py-0.5 text-[9px] sm:px-3 sm:py-1"
                   style={{ color: category?.accentColor ?? "#F5F5F5" }}
                 >
                   {node.label}

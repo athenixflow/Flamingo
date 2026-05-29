@@ -1,11 +1,21 @@
 "use client";
 
+import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import { Container } from "@/components/ui/Container";
 import { ScrollReveal } from "@/components/motion/ScrollReveal";
 import { CERTIFICATIONS, CERTIFICATIONS_INTRO } from "@/content/about";
 
 export function Certifications() {
+  const [isMobile, setIsMobile] = useState(false);
+  useEffect(() => {
+    const check = () => setIsMobile(window.innerWidth < 768);
+    check();
+    window.addEventListener("resize", check);
+    return () => window.removeEventListener("resize", check);
+  }, []);
+  const particleCount = isMobile ? 6 : 14;
+
   return (
     <section
       aria-labelledby="cert-heading"
@@ -39,7 +49,7 @@ export function Certifications() {
 
         <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
           {CERTIFICATIONS.map((cert, i) => (
-            <CertCard key={cert.id} cert={cert} index={i} />
+            <CertCard key={cert.id} cert={cert} index={i} particleCount={particleCount} />
           ))}
         </div>
       </Container>
@@ -50,13 +60,15 @@ export function Certifications() {
 function CertCard({
   cert,
   index,
+  particleCount,
 }: {
   cert: (typeof CERTIFICATIONS)[number];
   index: number;
+  particleCount: number;
 }) {
   // Pseudo-random scatter origins for the particle-converge effect (deterministic)
-  const particles = Array.from({ length: 14 }).map((_, i) => {
-    const angle = (i / 14) * Math.PI * 2 + index;
+  const particles = Array.from({ length: particleCount }).map((_, i) => {
+    const angle = (i / particleCount) * Math.PI * 2 + index;
     const radius = 90 + (i % 5) * 18;
     return {
       x: Math.cos(angle) * radius,

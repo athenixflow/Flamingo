@@ -38,8 +38,7 @@ export function FeaturedProducts() {
         <div className="mask-fade pointer-events-none absolute inset-y-0 right-0 z-10 w-12 bg-gradient-to-l from-flamingo-obsidian to-transparent sm:w-24" />
 
         <ul
-          className="flex snap-x snap-mandatory gap-5 overflow-x-auto px-[max(1rem,4vw)] pb-6 sm:gap-7 sm:px-[max(3rem,8vw)]"
-          style={{ scrollbarWidth: "none" }}
+          className="no-scrollbar no-swipe-back flex snap-x snap-mandatory gap-5 overflow-x-auto px-[max(1rem,4vw)] pb-6 sm:gap-7 sm:px-[max(3rem,8vw)]"
           role="list"
           aria-label="Featured products carousel"
         >

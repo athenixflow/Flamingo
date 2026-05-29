@@ -1,5 +1,6 @@
 "use client";
 
+import { useEffect, useState } from "react";
 import dynamic from "next/dynamic";
 import { motion } from "framer-motion";
 import { Container } from "@/components/ui/Container";
@@ -19,6 +20,14 @@ function HeroFallback() {
       <div
         aria-hidden
         className="pointer-events-none absolute inset-0 bg-gradient-radial from-flamingo-pink/10 via-transparent to-transparent"
+      />
+      {/* Soft animated pink glow blob to keep the mobile backdrop cinematic
+          without paying the R3F mount cost. */}
+      <motion.div
+        aria-hidden
+        animate={{ opacity: [0.35, 0.55, 0.35], scale: [0.9, 1.05, 0.9] }}
+        transition={{ duration: 9, repeat: Infinity, ease: "easeInOut" }}
+        className="pointer-events-none absolute left-1/2 top-1/2 h-[60vh] w-[60vh] -translate-x-1/2 -translate-y-1/2 rounded-full bg-flamingo-pink/12 blur-3xl"
       />
     </div>
   );
@@ -56,6 +65,20 @@ function Particles({ count = 14 }: { count?: number }) {
 
 export function AboutHero() {
   const reduced = useReducedMotion();
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    const check = () => setIsMobile(window.innerWidth < 768);
+    check();
+    window.addEventListener("resize", check);
+    return () => window.removeEventListener("resize", check);
+  }, []);
+
+  // Mobile + reduced-motion paths skip the R3F mount entirely — saves a
+  // ~600 KB Three.js parse + GPU footprint that mid-tier phones can't
+  // afford. The animated gradient blob inside HeroFallback keeps the
+  // backdrop alive without the cost.
+  const showR3F = !reduced && !isMobile;
 
   return (
     <section
@@ -63,16 +86,16 @@ export function AboutHero() {
       className="relative min-h-[100svh] w-full overflow-hidden"
     >
       <div className="absolute inset-0">
-        {reduced ? (
-          <HeroFallback />
-        ) : (
+        {showR3F ? (
           <ClientErrorBoundary name="AboutHypercar" fallback={<HeroFallback />}>
             <HypercarScene />
           </ClientErrorBoundary>
+        ) : (
+          <HeroFallback />
         )}
       </div>
 
-      {!reduced && <Particles />}
+      {!reduced && <Particles count={isMobile ? 8 : 14} />}
 
       {/* Cinematic vignette layers */}
       <div
@@ -97,11 +120,11 @@ export function AboutHero() {
           initial={{ y: 24, opacity: 0 }}
           animate={{ y: 0, opacity: 1 }}
           transition={{ delay: 0.4, duration: 1, ease: [0.16, 1, 0.3, 1] }}
-          className="text-eyebrow mb-8 flex items-center justify-center gap-3 text-flamingo-titanium"
+          className="text-eyebrow mb-8 flex max-w-full flex-wrap items-center justify-center gap-x-3 gap-y-2 text-flamingo-titanium"
         >
-          <span aria-hidden className="h-px w-10 bg-flamingo-titanium/60" />
-          {ABOUT_HERO.eyebrow}
-          <span aria-hidden className="h-px w-10 bg-flamingo-titanium/60" />
+          <span aria-hidden className="hidden h-px w-10 bg-flamingo-titanium/60 sm:block" />
+          <span className="break-words text-center">{ABOUT_HERO.eyebrow}</span>
+          <span aria-hidden className="hidden h-px w-10 bg-flamingo-titanium/60 sm:block" />
         </motion.span>
 
         <motion.h1

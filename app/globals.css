@@ -5,6 +5,8 @@
 @layer base {
   :root {
     --flamingo-pink: 229 9 130;
+    --accent-magenta: 199 0 111;
+    --accent-hot-pink: 255 77 184;
     --obsidian: 5 5 5;
     --carbon: 17 17 17;
     --titanium: 184 184 184;

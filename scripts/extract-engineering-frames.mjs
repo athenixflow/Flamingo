@@ -32,23 +32,23 @@ const PROFILES = [
     outDir: path.join(ROOT, "public", "videos", "engineering-frames"),
     manifest: path.join(ROOT, "content", "engineering-frames.json"),
     pathPrefix: "/videos/engineering-frames/frame-",
+    pathSuffix: ".webp",
     fps: 15,
-    width: 1280,
-    qscale: 4,
+    width: 1920,
+    quality: 82,
   },
   {
-    // Mobile profile: half the frame rate AND half the resolution. Each
-    // scroll-pixel advances the same fraction of the timeline, but with
-    // half as many img.src swaps per scroll-distance — the paint cost
-    // halves and the total download drops to ~1 MB. The visual
-    // difference is invisible on a ~390 px-wide viewport.
+    // Mobile: 960px covers retina phones (iPhone 15 Pro Max ≈ 1290 device
+    // px) with mild downscale rather than the heavy upscale the old 480px
+    // produced. Half the frame rate keeps img.src swaps cheap.
     name: "mobile",
     outDir: path.join(ROOT, "public", "videos", "engineering-frames-mobile"),
     manifest: path.join(ROOT, "content", "engineering-frames-mobile.json"),
     pathPrefix: "/videos/engineering-frames-mobile/frame-",
+    pathSuffix: ".webp",
     fps: 8,
-    width: 480,
-    qscale: 8,
+    width: 960,
+    quality: 78,
   },
 ];
 
@@ -69,31 +69,34 @@ function run(cmd, args) {
 async function buildProfile(profile) {
   await fs.mkdir(profile.outDir, { recursive: true });
 
-  // Wipe any previous extraction so frame counts stay deterministic.
+  // Wipe any previous extraction (both legacy .jpg and current .webp) so
+  // frame counts stay deterministic and old artifacts don't ship.
   const existing = await fs.readdir(profile.outDir).catch(() => []);
   for (const f of existing) {
-    if (f.startsWith("frame-") && f.endsWith(".jpg")) {
+    if (f.startsWith("frame-") && (f.endsWith(".jpg") || f.endsWith(".webp"))) {
       await fs.unlink(path.join(profile.outDir, f));
     }
   }
 
   console.log(`[${profile.name}] extracting from ${path.relative(ROOT, SRC)}…`);
-  const outputPattern = path.join(profile.outDir, "frame-%04d.jpg");
+  const outputPattern = path.join(profile.outDir, "frame-%04d.webp");
   await run(ffmpegPath, [
     "-y",
     "-i",
     SRC,
     "-vf",
     `fps=${profile.fps},scale=${profile.width}:-2:flags=lanczos`,
-    "-q:v",
-    String(profile.qscale),
-    "-pix_fmt",
-    "yuvj420p",
+    "-c:v",
+    "libwebp",
+    "-quality",
+    String(profile.quality),
+    "-compression_level",
+    "6",
     outputPattern,
   ]);
 
   const files = (await fs.readdir(profile.outDir))
-    .filter((f) => f.startsWith("frame-") && f.endsWith(".jpg"))
+    .filter((f) => f.startsWith("frame-") && f.endsWith(".webp"))
     .sort();
 
   if (files.length === 0) {
@@ -126,7 +129,7 @@ async function buildProfile(profile) {
     width,
     height,
     pathPrefix: profile.pathPrefix,
-    pathSuffix: ".jpg",
+    pathSuffix: profile.pathSuffix,
     padding: 4,
     totalBytes: totalSize,
   };

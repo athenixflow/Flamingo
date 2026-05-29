@@ -1,0 +1,265 @@
+"use client";
+
+import { useEffect, useRef, useState, type ReactNode } from "react";
+import {
+  motion,
+  useScroll,
+  useTransform,
+  type MotionValue,
+} from "framer-motion";
+import { Container } from "@/components/ui/Container";
+import { useReducedMotion } from "@/lib/hooks/useReducedMotion";
+import frameManifest from "@/content/engineering-frames.json";
+
+const POSTER_SRC = "/images/products/flamingo-tire-shine.jpeg";
+// MP4 fallback for prefers-reduced-motion users.
+const VIDEO_SRC = "/videos/engineering-reveal.mp4";
+
+// Each frame of the sequence gets ~9vh of scroll-runway. 120 frames ×
+// 9vh ≈ 1080vh — pinned reveal plays at one frame every ~9vh of scroll,
+// which translates to roughly 60–80 px of scroll per frame at typical
+// viewport heights. Buttery and easy to navigate.
+const VH_PER_FRAME = 9;
+const MIN_RUNWAY_VH = 600;
+const MAX_RUNWAY_VH = 1600;
+const SECTION_VH = Math.min(
+  MAX_RUNWAY_VH,
+  Math.max(MIN_RUNWAY_VH, frameManifest.count * VH_PER_FRAME + 100),
+);
+
+function framePath(index: number): string {
+  const padded = String(index + 1).padStart(frameManifest.padding, "0");
+  return `${frameManifest.pathPrefix}${padded}${frameManifest.pathSuffix}`;
+}
+
+export function EngineeringReveal() {
+  const ref = useRef<HTMLElement>(null);
+  const imgRef = useRef<HTMLImageElement>(null);
+  const reduced = useReducedMotion();
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    const check = () => setIsMobile(window.innerWidth < 768);
+    check();
+    window.addEventListener("resize", check);
+    return () => window.removeEventListener("resize", check);
+  }, []);
+
+  const simplified = reduced;
+
+  const { scrollYProgress } = useScroll({
+    target: ref,
+    offset: ["start start", "end end"],
+  });
+
+  // Preload every frame as a real Image so the browser's image cache holds
+  // a decoded bitmap. After this finishes, `img.src = framePath(n)` is a
+  // near-zero-cost swap — no network, no decode.
+  useEffect(() => {
+    if (simplified) return;
+    const preloaders: HTMLImageElement[] = [];
+    for (let i = 0; i < frameManifest.count; i++) {
+      const img = new Image();
+      img.src = framePath(i);
+      img.decoding = "async";
+      preloaders.push(img);
+    }
+    return () => {
+      // Drop references so the GC can recover memory if the section unmounts.
+      preloaders.length = 0;
+    };
+  }, [simplified]);
+
+  // Continuous rAF that snaps the visible <img>'s src to the right frame
+  // for the current scroll position. The src write is cheap because every
+  // frame is preloaded above.
+  useEffect(() => {
+    if (simplified) return;
+    const el = imgRef.current;
+    if (!el) return;
+    let rafId: number | null = null;
+    let lastFrame = -1;
+
+    const loop = () => {
+      rafId = requestAnimationFrame(loop);
+      const p = Math.min(Math.max(scrollYProgress.get(), 0), 1);
+      const frame = Math.min(
+        frameManifest.count - 1,
+        Math.floor(p * frameManifest.count),
+      );
+      if (frame !== lastFrame) {
+        el.src = framePath(frame);
+        lastFrame = frame;
+      }
+    };
+
+    rafId = requestAnimationFrame(loop);
+    return () => {
+      if (rafId !== null) cancelAnimationFrame(rafId);
+    };
+  }, [scrollYProgress, simplified]);
+
+  return (
+    <section
+      ref={ref}
+      aria-labelledby="engineering-reveal-heading"
+      className="relative w-full bg-flamingo-obsidian"
+      style={{ minHeight: simplified ? "100svh" : `${SECTION_VH}vh` }}
+    >
+      <div className="sticky top-0 flex h-screen w-full items-stretch overflow-hidden">
+        {simplified ? (
+          <video
+            className="absolute inset-0 h-full w-full object-cover"
+            muted
+            playsInline
+            autoPlay
+            loop
+            preload="auto"
+            poster={POSTER_SRC}
+            aria-hidden
+            style={{ filter: "brightness(0.6) contrast(1.05) saturate(1.05)" }}
+          >
+            <source src={VIDEO_SRC} type="video/mp4" />
+          </video>
+        ) : (
+          <img
+            ref={imgRef}
+            src={framePath(0)}
+            alt=""
+            aria-hidden
+            decoding="async"
+            className="absolute inset-0 h-full w-full select-none object-cover"
+            style={{ filter: "brightness(0.6) contrast(1.05) saturate(1.05)" }}
+            draggable={false}
+          />
+        )}
+
+        {/* Edge fade — same three-layer treatment as the Hero so it blends */}
+        <div
+          aria-hidden
+          className="pointer-events-none absolute inset-0"
+          style={{
+            background:
+              "radial-gradient(ellipse 85% 70% at 50% 50%, rgba(5,5,5,0.30) 0%, rgba(5,5,5,0.55) 55%, rgba(5,5,5,0.9) 82%, rgb(5,5,5) 100%)",
+          }}
+        />
+        <div
+          aria-hidden
+          className="pointer-events-none absolute inset-x-0 top-0 h-32 bg-gradient-to-b from-flamingo-obsidian via-flamingo-obsidian/70 to-transparent"
+        />
+        <div
+          aria-hidden
+          className="pointer-events-none absolute inset-x-0 bottom-0 h-40 bg-gradient-to-t from-flamingo-obsidian via-flamingo-obsidian/75 to-transparent"
+        />
+
+        {/* Corner label */}
+        <span className="text-meta absolute left-6 top-6 z-10 text-flamingo-titanium sm:left-10 sm:top-10">
+          <span
+            aria-hidden
+            className="mr-3 inline-block h-px w-6 align-middle bg-flamingo-pink"
+          />
+          F010 · Engineering Reveal
+        </span>
+
+        <Container className="relative z-10 flex h-full flex-col items-center justify-center gap-7 text-center">
+          <RevealPanel
+            progress={scrollYProgress}
+            range={[0.05, 0.20]}
+            fadeOut={[0.30, 0.40]}
+            simplified={simplified}
+          >
+            <span className="text-eyebrow text-flamingo-titanium">
+              Transformation
+            </span>
+          </RevealPanel>
+
+          <RevealPanel
+            progress={scrollYProgress}
+            range={[0.28, 0.46]}
+            fadeOut={[0.62, 0.74]}
+            simplified={simplified}
+          >
+            <h2
+              id="engineering-reveal-heading"
+              className="text-display max-w-4xl text-flamingo-soft"
+            >
+              Before. After.
+              <br />
+              <span className="text-gradient-pink">Engineered in between.</span>
+            </h2>
+          </RevealPanel>
+
+          <RevealPanel
+            progress={scrollYProgress}
+            range={[0.62, 0.80]}
+            fadeOut={[0.92, 1.0]}
+            simplified={simplified}
+          >
+            <p className="mx-auto max-w-2xl text-base text-flamingo-titanium md:text-lg">
+              The hydrophobic polymer + ozone formula at the heart of our tire
+              chemistry — visible in slow motion.
+            </p>
+          </RevealPanel>
+        </Container>
+
+        {/* Slim scroll-progress rail bottom-right — desktop only */}
+        {!simplified && !isMobile && (
+          <ScrollProgressRail progress={scrollYProgress} />
+        )}
+      </div>
+    </section>
+  );
+}
+
+interface RevealPanelProps {
+  progress: MotionValue<number>;
+  range: [number, number];
+  fadeOut: [number, number];
+  simplified: boolean;
+  children: ReactNode;
+}
+
+function RevealPanel({
+  progress,
+  range,
+  fadeOut,
+  simplified,
+  children,
+}: RevealPanelProps) {
+  const x = useTransform(progress, range, [-160, 0]);
+  const opacity = useTransform(
+    progress,
+    [range[0], range[1], fadeOut[0], fadeOut[1]],
+    [0, 1, 1, 0],
+  );
+
+  if (simplified) {
+    return <div className="flex w-full justify-center">{children}</div>;
+  }
+
+  return (
+    <motion.div
+      style={{ x, opacity }}
+      className="flex w-full justify-center will-change-transform"
+    >
+      {children}
+    </motion.div>
+  );
+}
+
+function ScrollProgressRail({ progress }: { progress: MotionValue<number> }) {
+  const height = useTransform(progress, [0, 1], ["0%", "100%"]);
+  return (
+    <div className="pointer-events-none absolute bottom-10 right-8 z-10 flex h-32 flex-col items-center gap-3">
+      <div className="relative h-full w-px overflow-hidden bg-flamingo-titanium/25">
+        <motion.div
+          style={{ height }}
+          className="absolute inset-x-0 top-0 bg-flamingo-pink shadow-glow"
+        />
+      </div>
+      <span className="text-meta rotate-90 text-flamingo-titanium [writing-mode:vertical-rl]">
+        Scroll
+      </span>
+    </div>
+  );
+}

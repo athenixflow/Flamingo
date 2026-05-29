@@ -1,0 +1,10 @@
+{
+  "count": 120,
+  "fps": 15,
+  "width": 1280,
+  "height": 720,
+  "pathPrefix": "/videos/engineering-frames/frame-",
+  "pathSuffix": ".jpg",
+  "padding": 4,
+  "totalBytes": 16011048
+}

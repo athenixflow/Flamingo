@@ -1,5 +1,5 @@
 import { Hero } from "@/components/sections/home/Hero";
-import { Transformation } from "@/components/sections/home/Transformation";
+import { EngineeringReveal } from "@/components/sections/home/EngineeringReveal";
 import { FeaturedProducts } from "@/components/sections/home/FeaturedProducts";
 import { TechShowcase } from "@/components/sections/home/TechShowcase";
 import { DetailingCinematics } from "@/components/sections/home/DetailingCinematics";
@@ -32,7 +32,7 @@ export default function HomePage() {
       />
       <LoaderOverlay logoSrc={logoSrc} />
       <Hero />
-      <Transformation />
+      <EngineeringReveal />
       <FeaturedProducts />
       <TechShowcase />
       <DetailingCinematics />

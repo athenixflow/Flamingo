@@ -80,7 +80,7 @@ export function MobileMenu({ open, onClose, logoSrc }: MobileMenuProps) {
                 Start an Inquiry
               </Button>
               <p className="text-xs uppercase tracking-ultra text-flamingo-titanium">
-                Engineered in USA · Nothing But The Best
+                Engineered in Nigeria · Nothing But The Best
               </p>
             </div>
           </nav>

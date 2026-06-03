@@ -206,13 +206,13 @@ export const REACH_INTRO = {
 };
 
 // Hub-to-region trade routes (great-circle arcs drawn over the WorldMap).
-// `from` and `to` are [lon, lat]. Origin is the China manufacturing HQ.
+// `from` and `to` are [lon, lat]. Origin is the Lagos, Nigeria HQ.
 export const REACH_ROUTES: { from: [number, number]; to: [number, number]; region: string }[] = [
-  { from: [104.1, 35.8], to: [-95.7, 37.0], region: "Americas" },
-  { from: [104.1, 35.8], to: [10.4, 51.1], region: "Europe" },
-  { from: [104.1, 35.8], to: [53.8, 23.4], region: "Middle East" },
-  { from: [104.1, 35.8], to: [22.9, -30.5], region: "Africa" },
-  { from: [104.1, 35.8], to: [133.7, -25.2], region: "Oceania" },
+  { from: [3.38, 6.52], to: [-95.7, 37.0], region: "Americas" },
+  { from: [3.38, 6.52], to: [10.4, 51.1], region: "Europe" },
+  { from: [3.38, 6.52], to: [53.8, 23.4], region: "Middle East" },
+  { from: [3.38, 6.52], to: [22.9, -30.5], region: "Southern Africa" },
+  { from: [3.38, 6.52], to: [133.7, -25.2], region: "Oceania" },
 ];
 
 export const CERTIFICATIONS_INTRO = {

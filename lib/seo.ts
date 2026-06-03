@@ -1,9 +1,9 @@
 import type { Metadata } from "next";
 
 const SITE_NAME = "Flamingo Car Care";
-const SITE_URL = "https://flamingocarcare.com";
+const SITE_URL = "https://flamingocarcaretech.com";
 const DEFAULT_DESCRIPTION =
-  "Engineered automotive care for perfectionists. Nano ceramic coatings, tire technology, and premium detailing systems — engineered in USA.";
+  "Engineered automotive care for perfectionists. Nano ceramic coatings, tire technology, and premium detailing systems — engineered in Nigeria, trusted worldwide.";
 
 interface BuildMetadataInput {
   title?: string;

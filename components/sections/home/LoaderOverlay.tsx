@@ -79,7 +79,7 @@ export function LoaderOverlay({ logoSrc }: LoaderOverlayProps = {}) {
               transition={{ delay: 0.4 }}
               className="text-eyebrow text-flamingo-titanium"
             >
-              Engineered in USA · Nothing But The Best
+              Engineered in Nigeria · Nothing But The Best
             </motion.span>
 
             <div className="relative h-px w-48 overflow-hidden bg-flamingo-titanium/15">

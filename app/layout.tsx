@@ -4,6 +4,7 @@ import { Analytics } from "@vercel/analytics/react";
 import { LenisProvider } from "@/components/motion/LenisProvider";
 import { Navbar } from "@/components/nav/Navbar";
 import { Footer } from "@/components/nav/Footer";
+import { WhatsAppButton } from "@/components/ui/WhatsAppButton";
 import { buildMetadata } from "@/lib/seo";
 import { getBrandLogo } from "@/lib/brand-assets";
 import "./globals.css";
@@ -50,6 +51,7 @@ export default function RootLayout({
           <Navbar logoSrc={logoSrc} />
           <main id="main">{children}</main>
           <Footer logoSrc={logoSrc} />
+          <WhatsAppButton />
         </LenisProvider>
         <Analytics />
       </body>

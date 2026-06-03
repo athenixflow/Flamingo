@@ -20,10 +20,7 @@ export const FOOTER_LINKS = {
   company: [
     { label: "About", href: "/about" },
     { label: "Contact", href: "/contact" },
-  ],
-  contact: [
-    { label: "General Inquiry", href: "/contact" },
-    { label: "Distributors", href: "/contact?type=distributor" },
-    { label: "OEM / ODM", href: "/contact?type=oem" },
+    { label: "General Inquiry", href: "/contact?type=general" },
+    { label: "Become a Distributor", href: "/contact?type=distributor" },
   ],
 };

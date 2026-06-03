@@ -108,8 +108,8 @@ function ReachMap() {
     return { from, to, mx, my, region: r.region, i };
   }).filter((r): r is NonNullable<typeof r> => r !== null);
 
-  // The China HQ origin
-  const origin = projection([104.1, 35.8]) as [number, number];
+  // The Lagos, Nigeria HQ origin
+  const origin = projection([3.38, 6.52]) as [number, number];
 
   return (
     <div className="relative aspect-[16/10] w-full">
@@ -184,7 +184,7 @@ function ReachMap() {
           </g>
         ))}
 
-        {/* Origin (China HQ) */}
+        {/* Origin (Lagos HQ) */}
         {origin && (
           <g>
             <circle cx={origin[0]} cy={origin[1]} r={6} fill="#E50982" />

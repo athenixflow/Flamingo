@@ -90,7 +90,7 @@ export function Hero() {
           className="text-eyebrow mb-6 flex max-w-full flex-wrap items-center justify-center gap-x-3 gap-y-2"
         >
           <span aria-hidden className="hidden h-px w-10 bg-flamingo-titanium/60 sm:block" />
-          <span className="text-center">Engineered in USA · Nothing But The Best</span>
+          <span className="text-center">Engineered in Nigeria · Nothing But The Best</span>
           <span aria-hidden className="hidden h-px w-10 bg-flamingo-titanium/60 sm:block" />
         </motion.div>
 
@@ -157,7 +157,7 @@ export function Hero() {
 
 function TickerStrip() {
   const items = [
-    "Engineered in USA",
+    "Engineered in Nigeria",
     "Nothing But The Best",
     "Protect The Machine",
     "Nano Ceramic · 9H",

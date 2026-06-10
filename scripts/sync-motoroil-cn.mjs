@@ -282,40 +282,9 @@ async function main() {
   console.log(`Fetching ${LISTING_URL}…`);
   const listingHtml = await httpGet(LISTING_URL);
   const items = parseListing(listingHtml);
-  console.log(`  → ${items.length} product anchors`);
+  console.log(`  → ${items.length} product anchors (one entry per SKU, no dedup)`);
 
-  // Group by title, keep first detail URL per unique title
-  const byTitle = new Map();
-  for (const it of items) {
-    if (!byTitle.has(it.title)) byTitle.set(it.title, it.url);
-  }
-  console.log(`  → ${byTitle.size} unique titles`);
-
-  // Dedup against existing catalog + extras
-  const existingFingerprints = await readExistingFingerprints();
   const existingExtraSlugs = await readExistingExtraSlugs();
-  console.log(`  → ${existingFingerprints.size} existing motor-oil fingerprints in products.ts`);
-
-  // Walk through unique titles in listing order; pick ones whose grade
-  // fingerprint isn't already covered. Track adds so we don't add two
-  // titles with the same grade in this run.
-  const addedFingerprints = new Set();
-  const toAdd = [];
-  for (const [title, url] of byTitle) {
-    const fp = gradeFingerprint(title);
-    if (!fp) {
-      console.log(`  ? "${title}" — no grade detected, skipping`);
-      continue;
-    }
-    if (existingFingerprints.has(fp) || addedFingerprints.has(fp)) {
-      console.log(`  · "${title}" — already covered (${fp}), skipping`);
-      continue;
-    }
-    addedFingerprints.add(fp);
-    toAdd.push({ title, url, fingerprint: fp });
-  }
-
-  console.log(`\nWill add ${toAdd.length} new products. Fetching detail pages…\n`);
 
   // Read existing manifest to merge new entries
   let manifest = {};
@@ -323,16 +292,20 @@ async function main() {
     manifest = JSON.parse(await fs.readFile(MANIFEST_JSON, "utf8"));
   } catch {}
 
+  // First pass: fetch every detail page so we can build the slug from the
+  // F-code (which is the per-SKU differentiator).
   const newEntries = [];
-  for (const item of toAdd) {
-    const slug = slugFromTitle(item.title);
-    if (existingExtraSlugs.has(slug)) {
-      console.log(`  · ${slug} — already in products-extra.ts, skipping`);
-      continue;
-    }
-    console.log(`  → ${slug}`);
+  for (const item of items) {
+    console.log(`  → /MOTOR-OIL/${item.id}.html  "${item.title}"`);
     const detailHtml = await httpGet(item.url);
     const { imageSrc, code } = parseDetailPage(detailHtml);
+    const suffix = code ? code.toLowerCase() : item.id; // F-code OR .com page id as fallback
+    const slug = `${slugFromTitle(item.title)}-${suffix}`;
+
+    if (existingExtraSlugs.has(slug)) {
+      console.log(`     · already in products-extra.ts, skipping`);
+      continue;
+    }
 
     let imagePath = null;
     if (imageSrc) {

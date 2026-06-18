@@ -4,85 +4,79 @@ import { useEffect, useRef, useState } from "react";
 
 const PDF_INLINE_HREF = "/docs/flamingo-product-manual.pdf";
 const PDF_DOWNLOAD_HREF = "/api/manual";
-const RELOAD_FLAG = "flamingo-manual-soft-nav-reloaded";
-const SOFT_NAV_GRACE_MS = 350;
+// Time after which we auto-hide the loading overlay regardless of events.
+// By this point every supported browser has engaged its built-in PDF
+// viewer and the document is visible behind the overlay.
+const OVERLAY_AUTO_HIDE_MS = 1800;
+// Time after which, if the embed still hasn't reported a load, we swap
+// to an explicit Open / Download fallback card. Covers iOS Safari (no
+// inline PDF support) and very slow / failed connections.
 const FALLBACK_AFTER_MS = 6000;
 
 /**
  * Client wrapper around the PDF embed.
  *
- * Two failure modes we defend against:
+ * We deliberately don't depend on the <object> element firing a `load`
+ * event to clear the loading overlay — browsers' built-in PDF plugins
+ * take over the embed and stop bubbling JS events, so that signal is
+ * unreliable (and in incognito with a cold cache, it almost never
+ * arrives in time). Instead the overlay auto-hides on a fixed timer,
+ * with the iframe `load` event as a fast-path optimisation when it does
+ * fire.
  *
- * 1. Soft-nav blank: when the user arrives via a Next.js client-side route
- *    transition (e.g. clicking a <Link> elsewhere on the site), the browser's
- *    built-in PDF viewer plugin doesn't initialize on the freshly-mounted
- *    <object>. The element exists in the DOM but renders nothing. If the
- *    plugin hasn't fired its load event within SOFT_NAV_GRACE_MS we trigger
- *    a single window.location.reload() — tracked in sessionStorage so we
- *    never loop.
- *
- * 2. Slow / unsupported embed: if the plugin still hasn't loaded after
- *    FALLBACK_AFTER_MS we swap the embed for a fallback card with explicit
- *    Open + Download buttons. Covers iOS Safari (no inline PDF) and very
- *    slow connections gracefully.
+ * If neither the iframe load fires nor the user reaches the page on a
+ * device with inline PDF support, the 6s fallback timer swaps the embed
+ * for an explicit Open / Download card.
  */
 export function ManualPDFViewer() {
   const objectRef = useRef<HTMLObjectElement>(null);
-  const [status, setStatus] = useState<"loading" | "ready" | "fallback">("loading");
+  const [overlayVisible, setOverlayVisible] = useState(true);
+  const [fallback, setFallback] = useState(false);
 
   useEffect(() => {
     const el = objectRef.current;
-    if (!el) return;
 
+    let loadFired = false;
     let cancelled = false;
-
-    // Soft-nav self-heal: if the embed hasn't reported a load within the
-    // grace window, do one hard reload to force the browser to engage the
-    // PDF plugin. sessionStorage prevents an infinite loop on repeat soft
-    // navs back to this page during the same tab session.
-    const softNavTimer = window.setTimeout(() => {
-      if (cancelled || status === "ready") return;
-      try {
-        if (window.sessionStorage.getItem(RELOAD_FLAG)) return;
-        window.sessionStorage.setItem(RELOAD_FLAG, "1");
-      } catch {
-        // sessionStorage may throw in private mode — fall through and reload anyway.
-      }
-      window.location.reload();
-    }, SOFT_NAV_GRACE_MS);
 
     const handleLoad = () => {
       if (cancelled) return;
-      window.clearTimeout(softNavTimer);
-      window.clearTimeout(fallbackTimer);
-      try {
-        window.sessionStorage.removeItem(RELOAD_FLAG);
-      } catch {}
-      setStatus("ready");
+      loadFired = true;
+      setOverlayVisible(false);
     };
 
-    const fallbackTimer = window.setTimeout(() => {
-      if (cancelled || status === "ready") return;
-      setStatus("fallback");
-    }, FALLBACK_AFTER_MS);
-
-    el.addEventListener("load", handleLoad);
-    // <iframe> children also fire load — listen on the inner iframe if present.
-    const innerIframe = el.querySelector("iframe");
+    // Fast-path: hide overlay the moment the iframe reports it loaded.
+    // iframe `load` is more reliable than <object> `load` in practice.
+    const innerIframe = el?.querySelector("iframe");
     if (innerIframe) innerIframe.addEventListener("load", handleLoad);
+    if (el) el.addEventListener("load", handleLoad);
+
+    // Default-path: hide the overlay after a fixed grace period whether
+    // or not we ever hear a load event. The PDF plugin has engaged by
+    // this point on every supported browser.
+    const overlayTimer = window.setTimeout(() => {
+      if (cancelled) return;
+      setOverlayVisible(false);
+    }, OVERLAY_AUTO_HIDE_MS);
+
+    // Fallback: if we still haven't seen a load by FALLBACK_AFTER_MS,
+    // the device probably can't render PDFs inline (iOS Safari, some
+    // in-app browsers). Swap to explicit Open / Download buttons.
+    const fallbackTimer = window.setTimeout(() => {
+      if (cancelled || loadFired) return;
+      setFallback(true);
+    }, FALLBACK_AFTER_MS);
 
     return () => {
       cancelled = true;
-      window.clearTimeout(softNavTimer);
+      window.clearTimeout(overlayTimer);
       window.clearTimeout(fallbackTimer);
-      el.removeEventListener("load", handleLoad);
       if (innerIframe) innerIframe.removeEventListener("load", handleLoad);
+      if (el) el.removeEventListener("load", handleLoad);
     };
-    // status intentionally omitted — we only want this effect on mount
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  if (status === "fallback") {
+  if (fallback) {
     return <FallbackCard />;
   }
 
@@ -102,7 +96,7 @@ export function ManualPDFViewer() {
         />
       </object>
 
-      {status === "loading" && <LoadingOverlay />}
+      {overlayVisible && <LoadingOverlay />}
     </div>
   );
 }
@@ -111,7 +105,7 @@ function LoadingOverlay() {
   return (
     <div
       aria-hidden
-      className="pointer-events-none absolute inset-0 z-[55] flex flex-col items-center justify-center gap-4 bg-flamingo-obsidian"
+      className="pointer-events-none absolute inset-0 z-[55] flex flex-col items-center justify-center gap-4 bg-flamingo-obsidian transition-opacity duration-300"
     >
       <Spinner />
       <span className="text-meta text-flamingo-titanium">Loading manual…</span>

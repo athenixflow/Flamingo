@@ -60,9 +60,16 @@ export function ManualHero() {
             <DownloadGlyph className="h-4 w-4" />
             {MANUAL_HERO.primaryCta.label}
           </a>
-          <Button href={MANUAL_HERO.secondaryCta.href} variant="outline" magnetic={false}>
+          {/* Plain <a> instead of Button — Button wraps next/link, which
+              triggers a soft client-side navigation. The viewer route
+              relies on a full document load for the browser's PDF plugin
+              to engage, so this CTA must hard-navigate. */}
+          <a
+            href={MANUAL_HERO.secondaryCta.href}
+            className="inline-flex items-center justify-center gap-2 rounded-full border border-flamingo-titanium/30 px-7 py-3.5 text-sm font-bold uppercase tracking-ultra text-flamingo-soft transition-colors hover:border-flamingo-pink hover:text-flamingo-pink"
+          >
             {MANUAL_HERO.secondaryCta.label}
-          </Button>
+          </a>
           <Button href={MANUAL_HERO.tertiaryCta.href} variant="ghost" magnetic={false}>
             {MANUAL_HERO.tertiaryCta.label}
           </Button>

@@ -1,11 +1,7 @@
 import type { Metadata } from "next";
 import { buildMetadata } from "@/lib/seo";
+import { ManualPDFViewer } from "@/components/sections/manual/ManualPDFViewer";
 
-// Raw inline path — used by <object>/<iframe> so the browser's built-in
-// PDF viewer renders the document in place.
-const PDF_INLINE_HREF = "/docs/flamingo-product-manual.pdf";
-// Force-download endpoint — Content-Disposition: attachment, guaranteed
-// to trigger a save dialog across all browsers including iOS Safari.
 const PDF_DOWNLOAD_HREF = "/api/manual";
 
 export const metadata: Metadata = {
@@ -29,10 +25,10 @@ export const metadata: Metadata = {
  *
  * The viewer is a fixed full-viewport overlay that visually covers the
  * global Navbar / Footer / WhatsAppButton rendered by app/layout.tsx.
- * Native <object>/<iframe> hands rendering to the browser's built-in PDF
- * viewer (Chrome/Edge/Firefox/Safari desktop), which provides scroll,
- * zoom, search, page-navigation, and download natively. iOS Safari falls
- * back to the action-bar Download button + a "tap to open" link.
+ * The actual <object>/<iframe> + loading state + fallback lives in the
+ * client component <ManualPDFViewer />, which also self-heals if the
+ * browser arrives here via a soft Next-router transition (single
+ * window.location.reload to wake the PDF plugin).
  */
 export default function FlamingoProductsManualViewerPage() {
   return (
@@ -41,21 +37,7 @@ export default function FlamingoProductsManualViewerPage() {
       role="region"
       aria-label="Flamingo Product Manual viewer"
     >
-      <object
-        data={`${PDF_INLINE_HREF}#view=FitH&toolbar=1&navpanes=1&scrollbar=1`}
-        type="application/pdf"
-        className="h-full w-full"
-        aria-label="Flamingo Product Manual"
-      >
-        <iframe
-          src={`${PDF_INLINE_HREF}#view=FitH&toolbar=1`}
-          title="Flamingo Product Manual"
-          className="h-full w-full border-0"
-        >
-          <FallbackMessage />
-        </iframe>
-      </object>
-
+      <ManualPDFViewer />
       <ActionBar />
     </div>
   );
@@ -79,43 +61,6 @@ function ActionBar() {
       >
         <CloseGlyph className="h-4 w-4" />
       </a>
-    </div>
-  );
-}
-
-/**
- * iOS Safari and other browsers that can't embed a PDF inline land here.
- * Renders a centered card with a download link + open-in-browser tap target.
- */
-function FallbackMessage() {
-  return (
-    <div className="flex h-full w-full flex-col items-center justify-center bg-flamingo-obsidian px-6 text-center">
-      <div className="max-w-md rounded-3xl border border-flamingo-titanium/15 bg-flamingo-obsidian/80 p-8">
-        <h1 className="display text-2xl font-bold text-flamingo-soft">
-          Flamingo Product Manual
-        </h1>
-        <p className="mt-3 text-sm text-flamingo-titanium">
-          Tap below to open the manual in your device&apos;s PDF reader, or download it for offline reading.
-        </p>
-        <div className="mt-6 flex flex-col gap-3">
-          <a
-            href={PDF_INLINE_HREF}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="inline-flex items-center justify-center gap-2 rounded-full bg-flamingo-pink px-6 py-3 text-sm font-bold uppercase tracking-ultra text-white shadow-glow"
-          >
-            Open PDF
-          </a>
-          <a
-            href={PDF_DOWNLOAD_HREF}
-            download="Flamingo Product Manual.pdf"
-            className="inline-flex items-center justify-center gap-2 rounded-full border border-flamingo-titanium/30 px-6 py-3 text-sm font-bold uppercase tracking-ultra text-flamingo-soft transition-colors hover:border-flamingo-pink hover:text-flamingo-pink"
-          >
-            <DownloadGlyph className="h-4 w-4" />
-            Download
-          </a>
-        </div>
-      </div>
     </div>
   );
 }

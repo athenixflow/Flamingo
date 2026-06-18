@@ -63,6 +63,9 @@ export function ManualHero() {
           <Button href={MANUAL_HERO.secondaryCta.href} variant="outline" magnetic={false}>
             {MANUAL_HERO.secondaryCta.label}
           </Button>
+          <Button href={MANUAL_HERO.tertiaryCta.href} variant="ghost" magnetic={false}>
+            {MANUAL_HERO.tertiaryCta.label}
+          </Button>
         </motion.div>
       </Container>
 

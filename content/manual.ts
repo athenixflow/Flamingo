@@ -997,13 +997,14 @@ export const MANUAL_PRODUCTS: ManualEntry[] = [
 // ─────────────────────────────────────────────────────────────────────
 
 export const MANUAL_HERO = {
-  eyebrow: "Product Manual",
-  headline: "FLAMINGO PRODUCT",
-  headlineAccent: "MANUAL.",
+  eyebrow: "Product Manual Details",
+  headline: "FLAMINGO PRODUCTS MANUAL",
+  headlineAccent: "DETAILS.",
   subhead:
     "Explore our complete automotive care catalogue — product specifications, application guides, maintenance solutions, and professional detailing products.",
   primaryCta: { label: "Download Complete Manual", href: "/docs/flamingo-product-manual.pdf" },
-  secondaryCta: { label: "Explore Products", href: "#categories" },
+  secondaryCta: { label: "View Online", href: "/FLAMINGO-PRODUCTS-MANUAL" },
+  tertiaryCta: { label: "Explore Products", href: "#categories" },
 } as const;
 
 export const ABOUT_FLAMINGO = {

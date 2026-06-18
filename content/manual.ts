@@ -1002,7 +1002,7 @@ export const MANUAL_HERO = {
   headlineAccent: "DETAILS.",
   subhead:
     "Explore our complete automotive care catalogue — product specifications, application guides, maintenance solutions, and professional detailing products.",
-  primaryCta: { label: "Download Complete Manual", href: "/docs/flamingo-product-manual.pdf" },
+  primaryCta: { label: "Download Complete Manual", href: "/api/manual" },
   secondaryCta: { label: "View Online", href: "/FLAMINGO-PRODUCTS-MANUAL" },
   tertiaryCta: { label: "Explore Products", href: "#categories" },
 } as const;
@@ -1069,7 +1069,7 @@ export const FEATURED_MANUAL_CODES: string[] = [
 ];
 
 export const MANUAL_DOWNLOAD = {
-  href: "/docs/flamingo-product-manual.pdf",
+  href: "/api/manual",
   filename: "Flamingo Product Manual.pdf",
   pages: 53,
   facts: [

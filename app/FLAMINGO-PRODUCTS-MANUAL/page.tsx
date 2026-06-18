@@ -1,7 +1,12 @@
 import type { Metadata } from "next";
 import { buildMetadata } from "@/lib/seo";
 
-const PDF_HREF = "/docs/flamingo-product-manual.pdf";
+// Raw inline path — used by <object>/<iframe> so the browser's built-in
+// PDF viewer renders the document in place.
+const PDF_INLINE_HREF = "/docs/flamingo-product-manual.pdf";
+// Force-download endpoint — Content-Disposition: attachment, guaranteed
+// to trigger a save dialog across all browsers including iOS Safari.
+const PDF_DOWNLOAD_HREF = "/api/manual";
 
 export const metadata: Metadata = {
   ...buildMetadata({
@@ -37,13 +42,13 @@ export default function FlamingoProductsManualViewerPage() {
       aria-label="Flamingo Product Manual viewer"
     >
       <object
-        data={`${PDF_HREF}#view=FitH&toolbar=1&navpanes=1&scrollbar=1`}
+        data={`${PDF_INLINE_HREF}#view=FitH&toolbar=1&navpanes=1&scrollbar=1`}
         type="application/pdf"
         className="h-full w-full"
         aria-label="Flamingo Product Manual"
       >
         <iframe
-          src={`${PDF_HREF}#view=FitH&toolbar=1`}
+          src={`${PDF_INLINE_HREF}#view=FitH&toolbar=1`}
           title="Flamingo Product Manual"
           className="h-full w-full border-0"
         >
@@ -60,7 +65,7 @@ function ActionBar() {
   return (
     <div className="pointer-events-none fixed right-4 top-4 z-[61] flex items-center gap-2 sm:right-6 sm:top-6">
       <a
-        href={PDF_HREF}
+        href={PDF_DOWNLOAD_HREF}
         download="Flamingo Product Manual.pdf"
         className="pointer-events-auto inline-flex items-center gap-2 rounded-full bg-flamingo-pink px-4 py-2.5 text-xs font-bold uppercase tracking-ultra text-white shadow-glow transition-transform hover:scale-[1.03]"
       >
@@ -94,7 +99,7 @@ function FallbackMessage() {
         </p>
         <div className="mt-6 flex flex-col gap-3">
           <a
-            href={PDF_HREF}
+            href={PDF_INLINE_HREF}
             target="_blank"
             rel="noopener noreferrer"
             className="inline-flex items-center justify-center gap-2 rounded-full bg-flamingo-pink px-6 py-3 text-sm font-bold uppercase tracking-ultra text-white shadow-glow"
@@ -102,7 +107,7 @@ function FallbackMessage() {
             Open PDF
           </a>
           <a
-            href={PDF_HREF}
+            href={PDF_DOWNLOAD_HREF}
             download="Flamingo Product Manual.pdf"
             className="inline-flex items-center justify-center gap-2 rounded-full border border-flamingo-titanium/30 px-6 py-3 text-sm font-bold uppercase tracking-ultra text-flamingo-soft transition-colors hover:border-flamingo-pink hover:text-flamingo-pink"
           >

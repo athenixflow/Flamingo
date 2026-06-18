@@ -105,7 +105,7 @@ export default function OpenGraph() {
               display: "flex",
             }}
           >
-            Engineered in Nigeria · Nothing But The Best
+            Nothing But The Best
           </div>
           <div
             style={{

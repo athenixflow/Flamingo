@@ -25,8 +25,8 @@ export function Footer({ logoSrc }: FooterProps = {}) {
           <Logo size="lg" src={logoSrc} />
           <p className="max-w-sm text-sm text-flamingo-titanium">
             Engineered automotive care for perfectionists. Nano ceramic
-            coatings, polymer tire technology, and premium detailing systems —
-            engineered in Nigeria, trusted worldwide.
+            coatings, polymer tire technology, and premium detailing systems
+            trusted worldwide.
           </p>
           <p className="text-eyebrow text-flamingo-titanium">
             Protect The Machine.

@@ -2,7 +2,7 @@ import type { MetadataRoute } from "next";
 import { PRODUCTS } from "@/content/products";
 import { SITE } from "@/lib/seo";
 
-const STATIC_PATHS = ["", "products", "about", "contact"];
+const STATIC_PATHS = ["", "products", "about", "contact", "FLAMINGO-PRODUCTS-MANUAL"];
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const now = new Date();

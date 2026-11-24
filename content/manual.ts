@@ -1,11 +1,13 @@
 /**
- * Flamingo Product Manual content — all 49 entries hand-curated from
- * FLAMINGO PRODUCT MANUAL AND DESCRIPTION.pdf (53 pages, 8.6 MB).
+ * Flamingo Product Manual content — all 53 entries hand-curated from
+ * FLAMINGO PRODUCT MANUAL AND DESCRIPTION.pdf (57 pages, 10.8 MB).
  *
  * The downloadable copy lives at /public/docs/flamingo-product-manual.pdf
  * and is the source of truth. This file mirrors its content for the
  * digital experience at /FLAMINGO-PRODUCTS-MANUAL.
  */
+
+import { MANUAL_DOWNLOAD_HREF } from "./manual-file";
 
 export type ManualCategoryId =
   | "engine-care"
@@ -990,6 +992,118 @@ export const MANUAL_PRODUCTS: ManualEntry[] = [
     categoryId: "accessories",
     productSlug: "flamingo-canton-towel",
   },
+  {
+    code: "F391",
+    codes: ["F391"],
+    name: "Headlight Restorer",
+    shelfLife: "5 Years",
+    specification: "300ml × 24pcs",
+    description:
+      "Flamingo Headlight Restorer is specially formulated to restore the clarity and appearance of dull, cloudy, yellowed and oxidized vehicle headlights. It helps improve headlight transparency, enhances the overall appearance of the vehicle and restores a cleaner, brighter finish. Its easy-to-use, one-step application requires no sanding, making headlight restoration simple and convenient.",
+    directions: [
+      "Ensure the headlight surface is cool and free from loose dirt and debris.",
+      "Apply a small amount of Flamingo Headlight Restorer to a clean, soft microfiber cloth.",
+      "Rub evenly over the headlight surface using circular motions.",
+      "Buff with a clean microfiber cloth until the desired clarity and finish are achieved.",
+      "Repeat the application if necessary.",
+    ],
+    cautions: [
+      "For external automotive headlight use only.",
+      "Avoid contact with eyes and prolonged skin contact.",
+      "Do not ingest.",
+      "Keep out of reach of children and animals.",
+      "Store in a cool, dry place away from direct sunlight.",
+      "Test on a small, inconspicuous area before full application.",
+    ],
+    categoryId: "exterior-care",
+  },
+  {
+    code: "F002N",
+    codes: ["F002N"],
+    name: "Foam Cleaner (450ml, Brush Applicator)",
+    shelfLife: "3 Years",
+    specification: "450ml",
+    description:
+      "Flamingo Foam Cleaner is specially formulated to remove dirt, stains, grease and stubborn grime from various automotive interior surfaces. Its rich foaming formula penetrates deep into fabrics and upholstery, helping to lift and loosen embedded dirt while refreshing the surface and restoring a cleaner appearance. Suitable for upholstery, fabric, carpets, vinyl and leather, it provides effective multi-purpose cleaning with minimal effort. Its convenient brush applicator makes cleaning simple and efficient.",
+    directions: [
+      "Shake the can well before use.",
+      "Ensure the surface to be cleaned is free from loose dirt and debris.",
+      "Apply Flamingo Foam Cleaner evenly onto the affected surface.",
+      "Allow the foam to penetrate for a few moments.",
+      "Gently scrub using the attached brush applicator or a suitable soft brush.",
+      "Wipe away the loosened dirt and foam with a clean, damp microfiber cloth.",
+      "Allow the surface to dry completely. Repeat if necessary.",
+    ],
+    cautions: [
+      "For automotive interior and compatible surface cleaning only.",
+      "Avoid contact with eyes and prolonged skin contact.",
+      "Do not ingest.",
+      "Test on a small, inconspicuous area before full application.",
+      "Do not use on hot surfaces.",
+      "Keep out of reach of children and animals.",
+      "Store in a cool, dry place away from direct sunlight and heat.",
+      "Pressurized container. Do not puncture or incinerate, even when empty.",
+    ],
+    categoryId: "interior-care",
+  },
+  {
+    code: "F003",
+    codes: ["F003"],
+    name: "Tire Foam",
+    shelfLife: "3 Years",
+    specification: "650ml",
+    description:
+      "Flamingo Tire Foam is specially formulated to clean, shine and enhance the appearance of vehicle tyres. Its rich foaming action helps loosen and remove dirt, road grime and accumulated debris while restoring a deep black, refreshed appearance. It leaves tyres looking clean, glossy and well-maintained with minimal effort. Its convenient spray-and-walk-away application makes tyre care quick and easy.",
+    directions: [
+      "Ensure tyres are cool before application.",
+      "Shake the can well before use.",
+      "Remove loose dirt and mud from the tyre surface.",
+      "Spray Flamingo Tire Foam evenly over the tyre sidewalls from a suitable distance.",
+      "Allow the foam to penetrate and work on the surface.",
+      "Leave to dry naturally. No wiping or rinsing is normally required.",
+    ],
+    cautions: [
+      "For external tyre use only.",
+      "Avoid spraying on tyre treads, brake components and braking surfaces.",
+      "Do not apply to hot surfaces.",
+      "Contents are under pressure.",
+      "Do not puncture or incinerate the container.",
+      "Keep away from heat, sparks and open flames.",
+      "Avoid contact with eyes and prolonged skin contact.",
+      "Use in a well-ventilated area.",
+      "Keep out of reach of children and animals.",
+      "Store in a cool, dry place away from direct sunlight.",
+    ],
+    categoryId: "tire-wheel-care",
+  },
+  {
+    code: "F392",
+    codes: ["F392"],
+    name: "Scratch Restorer",
+    shelfLife: "5 Years",
+    specification: "300ml × 24pcs",
+    volumePerCarton: "0.014 CBM",
+    description:
+      "Flamingo Scratch Remover is specially formulated to reduce the appearance of minor scratches, scuff marks and surface imperfections on automotive paintwork. It helps restore the vehicle's original colour and gloss, leaving the painted surface looking smoother, cleaner and more polished. Its easy-to-use formula helps improve the overall appearance of vehicle paintwork while enhancing its shine.",
+    directions: [
+      "Ensure the vehicle surface is clean, dry and free from dust or loose dirt.",
+      "Apply a small amount of Flamingo Scratch Remover onto a clean, soft microfiber cloth or applicator pad.",
+      "Rub gently over the affected area using circular motions.",
+      "Continue polishing evenly until the product is worked into the surface.",
+      "Wipe off any residue with a clean, dry microfiber cloth to reveal the improved finish.",
+      "Repeat if necessary.",
+    ],
+    cautions: [
+      "For automotive exterior paintwork use only.",
+      "Do not apply to hot surfaces or under direct sunlight.",
+      "Avoid contact with eyes and prolonged skin contact.",
+      "Do not ingest.",
+      "Keep out of reach of children and animals.",
+      "Test on a small, inconspicuous area before full application.",
+      "Store in a cool, dry place away from direct sunlight.",
+    ],
+    categoryId: "exterior-care",
+  },
 ];
 
 // ─────────────────────────────────────────────────────────────────────
@@ -1002,7 +1116,7 @@ export const MANUAL_HERO = {
   headlineAccent: "DETAILS.",
   subhead:
     "Explore our complete automotive care catalogue — product specifications, application guides, maintenance solutions, and professional detailing products.",
-  primaryCta: { label: "Download Complete Manual", href: "/api/manual" },
+  primaryCta: { label: "Download Complete Manual", href: MANUAL_DOWNLOAD_HREF },
   secondaryCta: { label: "View Online", href: "/FLAMINGO-PRODUCTS-MANUAL" },
   tertiaryCta: { label: "Explore Products", href: "#categories" },
 } as const;
@@ -1069,12 +1183,12 @@ export const FEATURED_MANUAL_CODES: string[] = [
 ];
 
 export const MANUAL_DOWNLOAD = {
-  href: "/api/manual",
+  href: MANUAL_DOWNLOAD_HREF,
   filename: "Flamingo Product Manual.pdf",
-  pages: 53,
+  pages: 57,
   facts: [
-    { label: "Pages", value: "53" },
-    { label: "Product Specifications", value: "49 Entries" },
+    { label: "Pages", value: "57" },
+    { label: "Product Specifications", value: "53 Entries" },
     { label: "Usage Guides", value: "Step-by-Step" },
     { label: "Technical Information", value: "Included" },
   ],

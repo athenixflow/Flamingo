@@ -1,8 +1,9 @@
 import type { Metadata } from "next";
 import { buildMetadata } from "@/lib/seo";
 import { ManualPDFViewer } from "@/components/sections/manual/ManualPDFViewer";
+import { MANUAL_DOWNLOAD_HREF } from "@/content/manual-file";
 
-const PDF_DOWNLOAD_HREF = "/api/manual";
+const PDF_DOWNLOAD_HREF = MANUAL_DOWNLOAD_HREF;
 
 export const metadata: Metadata = {
   ...buildMetadata({

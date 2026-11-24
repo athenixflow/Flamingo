@@ -73,7 +73,7 @@ export function ManualDownload() {
             </motion.a>
 
             <p className="text-meta mt-5 text-flamingo-titanium">
-              {MANUAL_DOWNLOAD.pages} pages · 8.6 MB · Free
+              {MANUAL_DOWNLOAD.pages} pages · 10.8 MB · Free
             </p>
           </GlassCard>
         </motion.div>

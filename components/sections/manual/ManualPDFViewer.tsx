@@ -1,9 +1,10 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import { MANUAL_DOWNLOAD_HREF, MANUAL_PDF_HREF } from "@/content/manual-file";
 
-const PDF_INLINE_HREF = "/docs/flamingo-product-manual.pdf";
-const PDF_DOWNLOAD_HREF = "/api/manual";
+const PDF_INLINE_HREF = MANUAL_PDF_HREF;
+const PDF_DOWNLOAD_HREF = MANUAL_DOWNLOAD_HREF;
 // Time after which we auto-hide the loading overlay regardless of events.
 // By this point every supported browser has engaged its built-in PDF
 // viewer and the document is visible behind the overlay.

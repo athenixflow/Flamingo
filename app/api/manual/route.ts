@@ -33,7 +33,9 @@ export async function GET() {
       "Content-Disposition":
         'attachment; filename="Flamingo Product Manual.pdf"',
       "Content-Length": String(body.byteLength),
-      "Cache-Control": "public, max-age=86400, immutable",
+      // Browsers always revalidate so a replaced manual shows up at once;
+      // the CDN keeps its copy until the next deploy purges it.
+      "Cache-Control": "public, max-age=0, s-maxage=31536000, must-revalidate",
     },
   });
 }
